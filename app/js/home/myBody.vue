@@ -16,29 +16,81 @@
         <p v-if="showlist04">办公用品</p>
       </nav>
       <div class="mainPart">
-        <div class="test">
-          <img src="../../img/huaji.jpg">
-          <p class="p1"><label>商品名:</label>薛定谔的滑稽</p>
-          <p class="p2"><label class="price">价格:</label>$999&nbsp;&nbsp;<label class="cart">加入购物车</label></p>
+        <div class="test" v-for="(item,key,index) in results">
+          <img :src="item.src">
+          <p class="p1">{{item.name}}</p>
+          <p class="p2">
+            <label>价格:</label>
+            ¥{{item.price}}
+            <label @click="addToCart(key)"  class="addCart">加入购物车</label>
+          </p>
         </div>
-        <div class="test"></div>
-        <div class="test"></div>
-        <div class="test"></div>
-        <div class="test"></div>
-        <div class="test"></div>
       </div>
     </div>
   </div>
 </template>
 <script>
+import url from "../../img/huaji.jpg";
+import global from "./global.vue";
 export default {
   data() {
     return {
+      results: [
+        {
+          id: 111,
+          name: "薛定谔的滑稽",
+          price: 999,
+          src: url
+        },
+        {
+          id: 222,
+          name: "薛定谔的滑稽02",
+          price: 999,
+          src: url
+        },
+        {
+          id: 333,
+          name: "薛定谔的滑稽03",
+          price: 999,
+          src: url
+        },
+        {
+          id: 444,
+          name: "薛定谔的滑稽04",
+          price: 999,
+          src: url
+        },
+        {
+          id: 555,
+          name: "薛定谔的滑稽05",
+          price: 999,
+          src: url
+        },
+        {
+          id: 666,
+          name: "薛定谔的滑稽06",
+          price: 999,
+          src: url
+        }
+      ],
       showlist01: false,
       showlist02: false,
       showlist03: false,
-      showlist04: false
+      showlist04: false,
+      cart: []
     };
+  },
+  methods: {
+    addToCart: function(num) {
+      this.cart = JSON.parse(localStorage.getItem("cart"));
+      this.cart.push({
+        id: this.results[num].id,
+        name: this.results[num].name,
+        price: this.results[num].price,
+        count: 1
+      });
+      localStorage.setItem("cart", JSON.stringify(this.cart));
+    }
   }
 };
 </script>
@@ -81,7 +133,7 @@ nav p:active {
 
 .mainPart {
   width: 88%;
-  position:relative;
+  position: relative;
   background: rgb(212, 225, 228);
   flex-direction: row;
 }
@@ -92,33 +144,47 @@ nav p:active {
   background: rgb(229, 235, 202);
   display: inline-block;
   padding: 0;
+  margin: 0;
+  margin-top: 10px;
   margin-left: 1%;
+  overflow: hidden;
 }
-img{
-  position:absolute;
-  height:70%;
-  width:70%;
-  top:0;
-  left:15%;
+img {
+  position: absolute;
+  height: 70%;
+  width: 70%;
+  top: 0;
+  left: 15%;
+  margin: 0;
+  padding: 0;
 }
-.p1{
-  position:absolute;
-  top:71%;
-  left:50%;
-  transform: translateX(-50%);
+.p1 {
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  transform: translate(-50%, 50%);
+  margin: 0;
+  padding: 0;
 }
-.p2{
-  position:absolute;
-  top:71%;
-  left:50%;
-  transform: translate(-50%,110%);
-  
+.p2 {
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  transform: translate(-50%, 200%);
+  margin: 0;
+  padding: 0;
+  word-break: unset;
 }
-.price{
-  position:inherit;
+.price {
+  display: inline-block;
 }
-.cart{
-  position:inherit;
+.addCart {
+  display: inline-block;
+  color:red;
+}
+.addCart:hover,.addCart:active{
+  color:rgb(48, 162, 233);
+  text-decoration: underline;
 }
 .test:nth-child(1) {
   margin-top: 0;

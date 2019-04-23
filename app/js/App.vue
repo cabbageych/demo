@@ -22,9 +22,11 @@
   </div>
 </template>
 <script>
+import global from "./home/global.vue";
 export default {
   data() {
     return {
+      cartNum: global.cartNum,
       count: 0,
       show: true,
       title: ["I", "W", "A", "N", "N", "A"],
@@ -39,32 +41,46 @@ export default {
   methods: {
     changeShow: function() {
       ++this.count;
-      if (this.count === 7){
+      if (this.count === 7) {
         //this.show = !this.show;
         this.count = 0;
-      } else if(this.count == 1){
+      } else if (this.count == 1) {
         this.show01 = !this.show01;
-      }else if(this.count == 2){
+      } else if (this.count == 2) {
         this.show02 = !this.show02;
-      }else if(this.count == 3){
+      } else if (this.count == 3) {
         this.show03 = !this.show03;
-      }else if(this.count == 4){
+      } else if (this.count == 4) {
         this.show04 = !this.show04;
-      }else if(this.count == 5){
+      } else if (this.count == 5) {
         this.show05 = !this.show05;
-      }else if(this.count == 6){
+      } else if (this.count == 6) {
         this.show06 = !this.show06;
       }
     }
   },
   mounted() {
     setInterval(this.changeShow, 600);
+    localStorage.setItem("cart",'[]');
+  },
+  computed: {
+    getCartNum: {
+      get() {
+        console.log(global.cartNum);
+        this.cartNum = global.cartNum;
+        return this.cartNum;
+      },
+      set() {}
+    }
   }
 };
 </script>
 <style>
-div,span,strong,p{
-  cursor:default;
+div,
+span,
+strong,
+p {
+  cursor: default;
 }
 #app {
   display: flex;

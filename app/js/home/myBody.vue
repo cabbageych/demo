@@ -4,7 +4,7 @@
       <nav>
         <div style="color:rgb(224, 85, 20);">商品列表</div>
         <div @click="showlist01 = !showlist01">服饰</div>
-        <p v-if="showlist01">服饰</p>
+        <p v-if="showlist01" @click="results = resultsTemp">服饰</p>
         <div @click="showlist02 = !showlist02">电子数码</div>
         <p v-if="showlist02">手机、电脑</p>
         <p v-if="showlist02">其他</p>
@@ -35,6 +35,20 @@ import global from "./global.vue";
 export default {
   data() {
     return {
+      resultsTemp:[
+        {
+          id: 111,
+          name: "薛定谔的滑稽",
+          price: 999,
+          src: url
+        },
+        {
+          id: 222,
+          name: "薛定谔的滑稽02",
+          price: 999,
+          src: url
+        },
+      ],
       results: [
         {
           id: 111,
@@ -109,14 +123,15 @@ nav {
   white-space: nowrap;
 }
 nav div:not(:first-child) {
-  border: 2px solid yellow;
-  background: lightgrey;
+  border-radius:6px;
+  border: 1px solid rgb(247, 247, 245);
+  background: rgb(228, 225, 225);
 }
 
 nav div:not(:first-child):active,
 nav div:not(:first-child):hover {
   color: white;
-  background: rgb(32, 32, 16);
+  background: rgb(129, 129, 77);
 }
 nav p {
   position: relative;
@@ -124,11 +139,12 @@ nav p {
   margin: 0;
   padding: 0;
   color: rgb(236, 133, 236);
+  border-radius: 5px;
+  border:1px solid rgb(165, 164, 164);
 }
 nav p:hover,
 nav p:active {
   color: rgb(42, 114, 209);
-  text-decoration: underline;
 }
 
 .mainPart {

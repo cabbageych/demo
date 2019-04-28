@@ -22,7 +22,7 @@
           <p class="p2">
             <label>价格:</label>
             ¥{{item.price}}
-            <label @click="addToCart(key)"  class="addCart">加入购物车</label>
+            <label @click="addToCart(key)" class="addCart">加入购物车</label>
           </p>
         </div>
       </div>
@@ -31,11 +31,10 @@
 </template>
 <script>
 import url from "../../img/huaji.jpg";
-import global from "./global.vue";
 export default {
   data() {
     return {
-      resultsTemp:[
+      resultsTemp: [
         {
           id: 111,
           name: "薛定谔的滑稽",
@@ -47,7 +46,7 @@ export default {
           name: "薛定谔的滑稽02",
           price: 999,
           src: url
-        },
+        }
       ],
       results: [
         {
@@ -91,7 +90,8 @@ export default {
       showlist02: false,
       showlist03: false,
       showlist04: false,
-      cart: []
+      cart: [],
+      countTest: 0
     };
   },
   methods: {
@@ -104,6 +104,15 @@ export default {
         count: 1
       });
       localStorage.setItem("cart", JSON.stringify(this.cart));
+      ++this.countTest;
+      //console.log(this.countTest);
+      this.$emit("cartNum", this.countTest); //向父组件传值
+    }
+  },
+  mounted() {
+    let tempCount = localStorage.getItem("cartNum");
+    if(tempCount >=0){
+      this.countTest = tempCount;
     }
   }
 };
@@ -123,7 +132,7 @@ nav {
   white-space: nowrap;
 }
 nav div:not(:first-child) {
-  border-radius:6px;
+  border-radius: 6px;
   border: 1px solid rgb(247, 247, 245);
   background: rgb(228, 225, 225);
 }
@@ -140,7 +149,7 @@ nav p {
   padding: 0;
   color: rgb(236, 133, 236);
   border-radius: 5px;
-  border:1px solid rgb(165, 164, 164);
+  border: 1px solid rgb(165, 164, 164);
 }
 nav p:hover,
 nav p:active {
@@ -196,10 +205,11 @@ img {
 }
 .addCart {
   display: inline-block;
-  color:red;
+  color: red;
 }
-.addCart:hover,.addCart:active{
-  color:rgb(48, 162, 233);
+.addCart:hover,
+.addCart:active {
+  color: rgb(48, 162, 233);
   text-decoration: underline;
 }
 .test:nth-child(1) {

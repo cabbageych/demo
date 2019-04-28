@@ -48,6 +48,9 @@ export default {
       if (sure) {
         this.value.splice(a, 1);
         localStorage.setItem("cart", JSON.stringify(this.value));
+        let tempCount = localStorage.getItem("cartNum");
+        --tempCount;
+        localStorage.setItem("cartNum",tempCount);
       }
     },
     sub: function() {
@@ -55,6 +58,7 @@ export default {
       if (sure) {
         localStorage.setItem("cart", "[]");
         this.value = "";
+        localStorage.setItem("cartNum",0);
       }
     }
   },

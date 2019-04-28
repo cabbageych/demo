@@ -15,18 +15,27 @@
         <span class="tail">网上商城</span>
       </div>
       <a class="a1" href="#">商家入口</a>
-      <router-link class="a2" to="/cart">我的购物车</router-link>
-      <router-link class="a3" to="/myBody">主页</router-link>
+      <button class="a2" @click="toCart()">
+        我的购物车&nbsp;&nbsp;
+        <strong id="showCartNum">{{childValue}}</strong>
+      </button>
+      <button class="a3" @click="toMainPage()">主页</button>
     </header>
-    <router-view></router-view>
+    <myBody v-on:cartNum="showChildValue" v-if="childShow"></myBody>
+    <cart v-else></cart>
   </div>
 </template>
 <script>
-import global from "./home/global.vue";
+import myBody from "./home/myBody.vue";
+import cart from "./home/cart.vue";
 export default {
+  components: {
+    myBody,
+    cart
+  },
   data() {
     return {
-      cartNum: global.cartNum,
+      childShow: true,
       count: 0,
       show: true,
       title: ["I", "W", "A", "N", "N", "A"],
@@ -35,7 +44,8 @@ export default {
       show03: false,
       show04: false,
       show05: false,
-      show06: false
+      show06: false,
+      childValue: 0
     };
   },
   methods: {
@@ -57,21 +67,32 @@ export default {
       } else if (this.count == 6) {
         this.show06 = !this.show06;
       }
+    },
+    showChildValue: function(val) {
+      this.childValue = val;
+    },
+    toCart: function() {
+      if (this.childShow == true) {
+        this.childShow = false;
+        localStorage.setItem("cartNum", this.childValue);
+      }
+    },
+    toMainPage: function() {
+      if (this.childShow == false) {
+        this.childShow = true;
+        let tempCount = localStorage.getItem("cartNum");
+        if (tempCount != this.childValue) {
+          this.childValue = tempCount;
+        }
+      }
     }
   },
   mounted() {
     setInterval(this.changeShow, 600);
-    localStorage.setItem("cart",'[]');
+    localStorage.setItem("cart", "[]");
   },
   computed: {
-    getCartNum: {
-      get() {
-        console.log(global.cartNum);
-        this.cartNum = global.cartNum;
-        return this.cartNum;
-      },
-      set() {}
-    }
+    
   }
 };
 </script>
@@ -103,7 +124,7 @@ header {
   position: absolute;
   left: 50%;
   bottom: 35px;
-  margin-left: 230px;
+  margin-left: 220px;
   font-size: 20px;
   text-decoration: none;
   color: lightcoral;
@@ -113,10 +134,13 @@ header {
   position: absolute;
   left: 50%;
   bottom: 35px;
-  margin-left: 350px;
+  margin-left: 330px;
   font-size: 20px;
   text-decoration: none;
   color: lightcoral;
+  border: none;
+  background: transparent;
+  padding: 0;
 }
 .a3 {
   position: absolute;
@@ -126,7 +150,24 @@ header {
   font-size: 20px;
   text-decoration: none;
   color: lightcoral;
+  border: none;
+  background: transparent;
+  padding: 0;
 }
+
+#showCartNum {
+  color: black;
+  text-indent: 2em;
+}
+
+header button:focus {
+  outline: none;
+}
+header button:hover {
+  color: lightblue;
+  text-decoration: underline;
+}
+
 header > a:hover,
 header > a:hover:active {
   color: lightblue;

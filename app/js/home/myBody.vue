@@ -4,25 +4,28 @@
       <nav>
         <div style="color:rgb(224, 85, 20);">商品列表</div>
         <div @click="showlist01 = !showlist01">服饰</div>
-        <p v-if="showlist01" @click="results = resultsTemp">衣裤</p>
+        <p v-if="showlist01" @click="showType(1)">衣裤</p>
         <div @click="showlist02 = !showlist02">电子数码</div>
-        <p v-if="showlist02">手机</p>
+        <p v-if="showlist02" @click="showType(2)">手机</p>
         <p v-if="showlist02">电脑</p>
         <div @click="showlist03 = !showlist03">食品</div>
-        <p v-if="showlist03">零食</p>
-        <p v-if="showlist03">生鲜</p>
+        <p v-if="showlist03" @click="showType(3)">零食</p>
+        <p v-if="showlist03" @click="showType(4)">生鲜</p>
         <div @click="showlist04 = !showlist04">文体办公</div>
-        <p v-if="showlist04">体育用品</p>
-        <p v-if="showlist04">办公用品</p>
+        <p v-if="showlist04" @click="showType(5)">体育用品</p>
+        <p v-if="showlist04" @click="showType(6)">办公用品</p>
       </nav>
       <div class="mainPart">
-        <div class="test" v-for="(item,key,index) in results">
+        <div class="test" v-for="(item,key,index) in resultsTemp">
           <img :src="item.src">
           <p class="p1">{{item.name}}</p>
           <p class="p2">
             <label>价格:</label>
             ¥{{item.price}}&nbsp;&nbsp;
-            <button @click="addToCart(key)" class="addCart">加入购物车</button>
+            <button
+              @click="addToCart(key)"
+              class="addCart"
+            >加入购物车</button>
           </p>
         </div>
       </div>
@@ -34,62 +37,61 @@ import url from "../../img/huaji.jpg";
 export default {
   data() {
     return {
-      resultsTemp: [
-        {
-          id: 111,
-          type:1,
-          name: "薛定谔的滑稽",
-          price: 999,
-          src: url
-        },
-        {
-          id: 222,
-          type:2,
-          name: "薛定谔的滑稽02",
-          price: 999,
-          src: url
-        }
-      ],
+      resultsTemp:[] ,
       results: [
         {
           id: 111,
-          type:3,
+          type: 3,
           name: "薛定谔的滑稽",
           price: 999,
           src: url
         },
         {
           id: 222,
-          type:4,
+          type: 4,
           name: "薛定谔的滑稽02",
           price: 999,
           src: url
         },
         {
           id: 333,
-          type:1,
+          type: 1,
           name: "薛定谔的滑稽03",
           price: 999,
           src: url
         },
         {
           id: 444,
-          type:1,
+          type: 1,
           name: "薛定谔的滑稽04",
           price: 999,
           src: url
         },
         {
           id: 555,
-          type:1,
+          type: 5,
           name: "薛定谔的滑稽05",
           price: 999,
           src: url
         },
         {
           id: 666,
-          type:6,
+          type: 6,
           name: "薛定谔的滑稽06",
+          price: 999,
+          src: url
+        },
+        {
+          id: 666,
+          type: 7,
+          name: "薛定谔的滑稽07",
+          price: 999,
+          src: url
+        },
+        {
+          id: 666,
+          type: 2,
+          name: "薛定谔的滑稽08",
           price: 999,
           src: url
         }
@@ -103,11 +105,19 @@ export default {
     };
   },
   methods: {
+    showType: function(type) {
+      this.resultsTemp = [];
+      for(let i = 0;i<this.results.length;i++){
+        if(this.results[i].type == type){
+          this.resultsTemp.push(this.results[i]);
+        }
+      }
+    },
     addToCart: function(num) {
       this.cart = JSON.parse(localStorage.getItem("cart"));
       this.cart.push({
         id: this.results[num].id,
-        type:this.results[num].type,
+        type: this.results[num].type,
         name: this.results[num].name,
         price: this.results[num].price,
         count: 1
@@ -119,15 +129,16 @@ export default {
     }
   },
   mounted() {
-    fetch('http://localhost:8080',{
+    /*fetch('http://localhost:8080',{
       method:'GET',
     }).then((response)=>{
       return response.json();
     }).then((val)=>{
       console.log(val);
-    })
+    })*/
+    this.resultsTemp = this.results; /////////
     let tempCount = localStorage.getItem("cartNum");
-    if(tempCount >=0){
+    if (tempCount >= 0) {
       this.countTest = tempCount;
     }
   }
@@ -192,7 +203,7 @@ nav p:active {
   font-size: 18px;
 }
 img {
-  position: relative;;
+  position: relative;
   height: 70%;
   width: 70%;
   top: 0;
@@ -202,8 +213,8 @@ img {
 }
 .p1 {
   position: relative;
-  left:50%;
-  transform: translate(-20%,0);
+  left: 50%;
+  transform: translate(-20%, 0);
   margin: 10px 0 0 0;
   padding: 0;
 }
@@ -213,18 +224,17 @@ img {
   transform: translate(-30%, 0);
   margin: 10px 0 0 0;
   padding: 0;
-  
 }
 .price {
   display: inline-block;
 }
 .addCart {
-  border:none;
-  padding:0;
-  margin:0;
+  border: none;
+  padding: 0;
+  margin: 0;
   color: red;
   background-color: transparent;
-  font-size:18px;
+  font-size: 18px;
 }
 .addCart:hover,
 .addCart:focus {

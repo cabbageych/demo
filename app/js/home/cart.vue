@@ -57,7 +57,7 @@ export default {
       let sure = confirm("是否确认下单?");
       if (sure) {
         //console.log(this.value);
-        fetch("http://localhost:8080", {
+        /*fetch("http://localhost:8080", {
           method: "POST",
           headers: {
             "Content-Type": "application/json"
@@ -67,7 +67,7 @@ export default {
           return response.text();
         }).then((val)=>{
           console.log(val);
-        });
+        });*/
         localStorage.setItem("cart", "[]");
         this.value = "";
         localStorage.setItem("cartNum", 0);

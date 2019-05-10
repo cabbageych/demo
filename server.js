@@ -73,3 +73,25 @@ var server = http.createServer((request, response) => {
 });
 
 server.listen(8080);
+
+//主页请求
+/*
+data = {
+    id:'',  //商品id
+    type:'',  //商品类别编码
+    name:'',  //商品名称
+    price:'',  //商品价格
+    des:'',   //商品描述
+    totalCount:'',   //商品剩余库存
+    url:'',    //商品图片url
+}
+
+
+//购物车提交
+data = {
+    id:'',   //商品id
+    type:'',  //商品类别编码
+    name:'',   //商品名称
+    count:'',  //购物车数量
+}
+*/

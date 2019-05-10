@@ -16,15 +16,21 @@
         <p v-if="showlist04" @click="showType(6)">办公用品</p>
       </nav>
       <div class="mainPart">
-        <div class="test" v-for="(item,key,index) in resultsTemp">
-          <img :src="item.src">
-          <p class="p1">{{item.name}}</p>
-          <p class="p2">
-            <label>价格:</label>
+        <div
+          class="test"
+          v-for="(item,key,index) in resultsTemp"
+          @mousemove="move($event)"
+          @mouseleave="leave($event)"
+        >
+          <img :src="item.src" style="pointer-events: none;">
+          <p class="p1" style="pointer-events: none;">{{item.name}}</p>
+          <p class="p2" style="pointer-events: none;">
+            <label style="pointer-events: none;">价格:</label>
             ¥{{item.price}}&nbsp;&nbsp;
             <button
               @click="addToCart(key)"
               class="addCart"
+              style="pointer-events: none;"
             >加入购物车</button>
           </p>
         </div>
@@ -34,10 +40,13 @@
 </template>
 <script>
 import url from "../../img/huaji.jpg";
+let tempDiv = document.createElement("div");
+tempDiv.style.pointerEvents = "none";
+let body = document.getElementsByTagName("body")[0];
 export default {
   data() {
     return {
-      resultsTemp:[] ,
+      resultsTemp: [],
       results: [
         {
           id: 111,
@@ -105,10 +114,22 @@ export default {
     };
   },
   methods: {
+    move: function(event) {
+      body.append(tempDiv);
+      tempDiv.style.position = "absolute";
+      tempDiv.style.height = 200 + "px";
+      tempDiv.style.width = 200 + "px";
+      tempDiv.style.backgroundColor = "red";
+      tempDiv.style.left = event.pageX + "px";
+      tempDiv.style.top = event.pageY + "px";
+    },
+    leave: function(event) {
+      body.removeChild(tempDiv);
+    },
     showType: function(type) {
       this.resultsTemp = [];
-      for(let i = 0;i<this.results.length;i++){
-        if(this.results[i].type == type){
+      for (let i = 0; i < this.results.length; i++) {
+        if (this.results[i].type == type) {
           this.resultsTemp.push(this.results[i]);
         }
       }
@@ -129,13 +150,15 @@ export default {
     }
   },
   mounted() {
-    /*fetch('http://localhost:8080',{
-      method:'GET',
-    }).then((response)=>{
-      return response.json();
-    }).then((val)=>{
-      console.log(val);
-    })*/
+    fetch("http://localhost:8080", {
+      method: "GET"
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(val => {
+        console.log(val);
+      });
     this.resultsTemp = this.results; /////////
     let tempCount = localStorage.getItem("cartNum");
     if (tempCount >= 0) {

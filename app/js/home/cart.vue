@@ -16,7 +16,7 @@
               <td>
                 <button @click="++item.count">+</button>
                 <span style="color:blue;">{{item.count}}</span>
-                <button v-if="item.count" @click="--item.count">-</button>
+                <button v-if="item.count>1" @click="--item.count">-</button>
               </td>
               <td style="color:red;" @click="del(index)">删除</td>
             </tr>
@@ -50,15 +50,27 @@ export default {
         localStorage.setItem("cart", JSON.stringify(this.value));
         let tempCount = localStorage.getItem("cartNum");
         --tempCount;
-        localStorage.setItem("cartNum",tempCount);
+        localStorage.setItem("cartNum", tempCount);
       }
     },
     sub: function() {
       let sure = confirm("是否确认下单?");
       if (sure) {
+        //console.log(this.value);
+        fetch("http://localhost:8080", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(this.value),
+        }).then((response)=>{
+          return response.text();
+        }).then((val)=>{
+          console.log(val);
+        });
         localStorage.setItem("cart", "[]");
         this.value = "";
-        localStorage.setItem("cartNum",0);
+        localStorage.setItem("cartNum", 0);
       }
     }
   },

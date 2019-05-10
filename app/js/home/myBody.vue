@@ -4,13 +4,13 @@
       <nav>
         <div style="color:rgb(224, 85, 20);">商品列表</div>
         <div @click="showlist01 = !showlist01">服饰</div>
-        <p v-if="showlist01" @click="results = resultsTemp">服饰</p>
+        <p v-if="showlist01" @click="results = resultsTemp">衣裤</p>
         <div @click="showlist02 = !showlist02">电子数码</div>
-        <p v-if="showlist02">手机、电脑</p>
-        <p v-if="showlist02">其他</p>
+        <p v-if="showlist02">手机</p>
+        <p v-if="showlist02">电脑</p>
         <div @click="showlist03 = !showlist03">食品</div>
-        <p v-if="showlist03">零食、生鲜</p>
-        <p v-if="showlist03">干货</p>
+        <p v-if="showlist03">零食</p>
+        <p v-if="showlist03">生鲜</p>
         <div @click="showlist04 = !showlist04">文体办公</div>
         <p v-if="showlist04">体育用品</p>
         <p v-if="showlist04">办公用品</p>
@@ -21,8 +21,8 @@
           <p class="p1">{{item.name}}</p>
           <p class="p2">
             <label>价格:</label>
-            ¥{{item.price}}
-            <label @click="addToCart(key)" class="addCart">加入购物车</label>
+            ¥{{item.price}}&nbsp;&nbsp;
+            <button @click="addToCart(key)" class="addCart">加入购物车</button>
           </p>
         </div>
       </div>
@@ -37,12 +37,14 @@ export default {
       resultsTemp: [
         {
           id: 111,
+          type:1,
           name: "薛定谔的滑稽",
           price: 999,
           src: url
         },
         {
           id: 222,
+          type:2,
           name: "薛定谔的滑稽02",
           price: 999,
           src: url
@@ -51,36 +53,42 @@ export default {
       results: [
         {
           id: 111,
+          type:3,
           name: "薛定谔的滑稽",
           price: 999,
           src: url
         },
         {
           id: 222,
+          type:4,
           name: "薛定谔的滑稽02",
           price: 999,
           src: url
         },
         {
           id: 333,
+          type:1,
           name: "薛定谔的滑稽03",
           price: 999,
           src: url
         },
         {
           id: 444,
+          type:1,
           name: "薛定谔的滑稽04",
           price: 999,
           src: url
         },
         {
           id: 555,
+          type:1,
           name: "薛定谔的滑稽05",
           price: 999,
           src: url
         },
         {
           id: 666,
+          type:6,
           name: "薛定谔的滑稽06",
           price: 999,
           src: url
@@ -99,6 +107,7 @@ export default {
       this.cart = JSON.parse(localStorage.getItem("cart"));
       this.cart.push({
         id: this.results[num].id,
+        type:this.results[num].type,
         name: this.results[num].name,
         price: this.results[num].price,
         count: 1
@@ -110,6 +119,13 @@ export default {
     }
   },
   mounted() {
+    fetch('http://localhost:8080',{
+      method:'GET',
+    }).then((response)=>{
+      return response.json();
+    }).then((val)=>{
+      console.log(val);
+    })
     let tempCount = localStorage.getItem("cartNum");
     if(tempCount >=0){
       this.countTest = tempCount;
@@ -173,9 +189,10 @@ nav p:active {
   margin-top: 10px;
   margin-left: 1%;
   overflow: hidden;
+  font-size: 18px;
 }
 img {
-  position: absolute;
+  position: relative;;
   height: 70%;
   width: 70%;
   top: 0;
@@ -184,33 +201,36 @@ img {
   padding: 0;
 }
 .p1 {
-  position: absolute;
-  top: 70%;
-  left: 50%;
-  transform: translate(-50%, 50%);
-  margin: 0;
+  position: relative;
+  left:50%;
+  transform: translate(-20%,0);
+  margin: 10px 0 0 0;
   padding: 0;
 }
 .p2 {
-  position: absolute;
-  top: 70%;
+  position: relative;
   left: 50%;
-  transform: translate(-50%, 200%);
-  margin: 0;
+  transform: translate(-30%, 0);
+  margin: 10px 0 0 0;
   padding: 0;
-  word-break: unset;
+  
 }
 .price {
   display: inline-block;
 }
 .addCart {
-  display: inline-block;
+  border:none;
+  padding:0;
+  margin:0;
   color: red;
+  background-color: transparent;
+  font-size:18px;
 }
 .addCart:hover,
-.addCart:active {
+.addCart:focus {
   color: rgb(48, 162, 233);
   text-decoration: underline;
+  outline: none;
 }
 .test:nth-child(1) {
   margin-top: 0;

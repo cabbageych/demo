@@ -16,21 +16,15 @@
         <p v-if="showlist04" @click="showType(6)">办公用品</p>
       </nav>
       <div class="mainPart">
-        <div
-          class="test"
-          v-for="(item,key,index) in resultsTemp"
-          @mousemove="move($event)"
-          @mouseleave="leave($event)"
-        >
-          <img :src="item.src" style="pointer-events: none;">
-          <p class="p1" style="pointer-events: none;">{{item.name}}</p>
-          <p class="p2" style="pointer-events: none;">
-            <label style="pointer-events: none;">价格:</label>
+        <div class="test" v-for="(item,key,index) in resultsTemp">
+          <img :src="item.src" @mousemove="move($event)" @mouseleave="leave($event)">
+          <p class="p1">{{item.name}}</p>
+          <p class="p2">
+            <label>价格:</label>
             ¥{{item.price}}&nbsp;&nbsp;
             <button
               @click="addToCart(key)"
               class="addCart"
-              style="pointer-events: none;"
             >加入购物车</button>
           </p>
         </div>

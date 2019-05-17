@@ -5,9 +5,9 @@
         <transition name="title">
           <span class="head" v-if="show">
             <strong v-if="show01" style="color:red;">I</strong>
-            <strong v-if="show02" style="color:lightblue;">W</strong>
-            <strong v-if="show03" style="color:yellow;">A</strong>
-            <strong v-if="show04" style="color:pink;">N</strong>
+            <strong v-if="show02" style="color:blue;">W</strong>
+            <strong v-if="show03" style="color:orange;">A</strong>
+            <strong v-if="show04" style="color:green;">N</strong>
             <strong v-if="show05">N</strong>
             <strong v-if="show06" style="color:purple;">A</strong>
           </span>
@@ -176,7 +176,8 @@ header > a:hover:active {
 .head {
   position: absolute;
   left: 50%;
-  margin-left: -280px;
+  margin-left: -320px;
+  font-size:55px;
 }
 .tail {
   position: absolute;

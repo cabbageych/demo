@@ -5,18 +5,45 @@
       <div id="centerCircle"></div>
       <p id="welcome">welcome to cabbage's chatRoom!</p>
     </div>
+    <textarea id="contentInput"></textarea>
+    <hr>
+    <button id="sendMessage" @click="sendMessage">Send</button>
+    <button id="exit" @click="closeConnection">close connection</button>
   </div>
 </template>
 <script>
 
 export default {
   data() {
-    return {};
+    return {
+      ws:null
+    };
   },
   beforeMount(){
     setTimeout(()=>{
       document.getElementById('mask').style.display = 'none';
     },3000);
+  },
+  mounted(){
+    this.ws = new WebSocket("ws://localhost:8080");
+    this.ws.addEventListener('open',function(e){
+      console.log("Connetion to server opended.");
+    });
+    this.ws.addEventListener('message',function(e){
+      console.log("Client receive a message from server: "+e.data);
+    });
+  },
+  methods:{
+    sendMessage:function(){
+      let content = document.getElementById('contentInput').value;
+      console.log(content);
+      this.ws.send(content);
+    },
+    closeConnection:function(){
+      this.ws.onclose = function(){
+        console.log("cancel connection!");
+      }
+    }
   }
 };
 </script>
@@ -79,5 +106,34 @@ export default {
     font-size: 50px;
     transform: translateX(-50%);
     margin-top: 180px;
+  }
+  #contentInput{
+    position:relative;
+    height:300px;
+    width:800px;
+    background: lightcyan;
+    top:30%;
+    left:20%;
+    border:none;
+    font-size: 18px;
+  }
+  #sendMessage{
+    position:relative;
+    height:40px;
+    width:60px;
+    font-size: 18px;
+    border:none;
+    left:50%;
+    background: rgb(106, 117, 219);
+    border-radius: 10px;
+  }
+  #exit{
+    position:relative;
+    height:40px;
+    font-size: 18px;
+    border:none;
+    left:50%;
+    background: rgb(106, 117, 219);
+    border-radius: 10px;
   }
 </style>

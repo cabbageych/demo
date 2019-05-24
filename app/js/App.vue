@@ -148,7 +148,6 @@ export default {
   height:100vh;
   display: grid;
   grid-template-columns: 70vh 20vh 10vh;
-  
 }
 #partRight{
   background: lightcoral;

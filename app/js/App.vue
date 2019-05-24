@@ -7,14 +7,19 @@
     </div>
     <div id="wrap">
       <div id="partLeft">
-        <textarea id="contentShow"></textarea>
+        <div id="contentShow"></div>
+        <hr style="background:black;height:3px;width:100%;">
         <textarea id="contentInput"></textarea>
-        <div>
-          <button id="sendMessage" @click="sendMessage">Send</button>
-        </div>
-        
+        <button id="sendMessage" @click="sendMessage">click to send message!</button>
       </div>
-      <div id="partRight"></div>
+      <div id="partRight">
+        <div id="inner">
+          <p style="font-size:25px;color:lightyellow;margin-bottom:10px;margin-top:5vh;">在线成员列表</p>
+          <ul id="memberList" style="font-size:20px;">
+            <ol v-for="item in memberList">{{item}}</ol>
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -22,36 +27,62 @@
 export default {
   data() {
     return {
-      ws: null
+      ws: null,
+      selfName: "",
+      memberList:[]
     };
   },
   beforeMount() {
     setTimeout(() => {
       document.getElementById("mask").style.display = "none";
-    }, 1000);
+    }, 100);
   },
   mounted() {
-    /*this.ws = new WebSocket("ws://localhost:8080");
-    this.ws.addEventListener('open',function(e){
+    this.ws = new WebSocket("ws://localhost:8080");
+    this.ws.addEventListener("open", function(e) {
       console.log("Connetion to server opended.");
     });
-    this.ws.addEventListener('message',function(e){
-      console.log("Client receive a message from server: "+e.data);
-    });*/
+    this.ws.addEventListener("message", (function(e) {
+      let data = JSON.parse(e.data);
+      if (data.type == 0) {
+        this.selfName = data.name;
+      }else if(data.type == 1){
+        //console.log(data.memberList);
+        this.memberList = data.memberList;
+      } else {
+        let contentShow = document.getElementById("contentShow");
+        let p = document.createElement("p");
+        let strong = document.createElement("strong");
+        if (data.name == this.selfName) {
+          strong.innerText = "me";
+        } else {
+          strong.innerText = data.name;
+        }
+        p.appendChild(strong);
+        p.append(data.message);
+        contentShow.appendChild(p);
+        //console.log("Client receive a message from server: "+e.data);
+      }
+    }).bind(this));
   },
   methods: {
     sendMessage: function() {
+      //console.log(this.memberList);
       let content = document.getElementById("contentInput").value;
-      //console.log(content);
       this.ws.send(content);
+      document.getElementById('contentInput').value = '';
     }
   }
 };
 </script>
 <style>
-* {
+body,
+html {
   padding: 0;
   margin: 0;
+}
+strong {
+  color: red;
 }
 #mask {
   position: absolute;
@@ -108,50 +139,80 @@ export default {
   transform: translateX(-50%);
   margin-top: 180px;
 }
+#wrap {
+  display: flex;
+  flex-direction: row;
+}
+#partLeft {
+  background: rgb(218, 218, 194);
+  width: 70vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+#partRight {
+  background: rgb(210, 222, 230);
+  width: 30vw;
+  height: 100vh;
+  text-align: center;
+}
 #contentShow {
   position: relative;
   height: 50vh;
   width: 50vw;
   background: lightcyan;
-  top: 5vh;
   left: 10vw;
+  margin-top: 5vh;
   border: none;
   font-size: 18px;
+  border-radius: 20px;
+  overflow: auto;
+}
+#contentShow > p {
+  margin-left: 10px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+#contentShow > p > strong {
+  margin-right: 10px;
 }
 #contentInput {
   position: relative;
-  height: 20vh;
+  height: 140px;
   width: 50vw;
-  background: rgb(230, 221, 101);
-  top: 5vh;
+  background: white;
   left: 10vw;
+  margin-top: 10px;
   border: none;
   font-size: 18px;
+  border-radius: 10px;
 }
 #sendMessage {
   position: relative;
+  margin-top: 10px;
   height: 40px;
-  width: 60px;
+  width: 30vw;
   font-size: 18px;
   border: none;
-  left: 50%;
-  background: rgb(106, 117, 219);
+  left: 20vw;
+  background: rgb(146, 153, 221);
+  border-radius: 6px;
+  font-size: 20px;
+}
+#inner {
+  position: relative;
+  background: lightseagreen;
+  width: 15vw;
+  height: 70vh;
+  margin: 0 auto;
   border-radius: 10px;
 }
-#wrap{
-  display:flex;
-  justify-content: row;
+#memberList {
+  padding: 0;
+  margin: 0;
 }
-#partLeft{
-  background: lightgoldenrodyellow;
-  width:70vw;
-  height:100vh;
-  display: grid;
-  grid-template-columns: 70vh 20vh 10vh;
-}
-#partRight{
-  background: lightcoral;
-  width:30vw;
-  height:100vh;
+#memberList > ol {
+  padding: 0;
+  margin: 0;
 }
 </style>

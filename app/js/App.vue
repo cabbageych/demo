@@ -7,6 +7,7 @@
     </div>
     <div id="wrap">
       <div id="partLeft">
+        <a id="returnToMain" href="http://www.huajiyang.com/chenhui/mainPage.html">点击返回主页</a>
         <div id="contentShow"></div>
         <hr style="background:black;height:3px;width:100%;">
         <textarea id="contentInput"></textarea>
@@ -29,48 +30,60 @@ export default {
     return {
       ws: null,
       selfName: "",
-      memberList:[]
+      memberList: []
     };
   },
   beforeMount() {
     setTimeout(() => {
       document.getElementById("mask").style.display = "none";
-    }, 100);
+    }, 5000);
   },
   mounted() {
     this.ws = new WebSocket("ws://localhost:8080");
     this.ws.addEventListener("open", function(e) {
       console.log("Connetion to server opended.");
     });
-    this.ws.addEventListener("message", (function(e) {
-      let data = JSON.parse(e.data);
-      if (data.type == 0) {
-        this.selfName = data.name;
-      }else if(data.type == 1){
-        //console.log(data.memberList);
-        this.memberList = data.memberList;
-      } else {
-        let contentShow = document.getElementById("contentShow");
-        let p = document.createElement("p");
-        let strong = document.createElement("strong");
-        if (data.name == this.selfName) {
-          strong.innerText = "me";
+    this.ws.addEventListener(
+      "message",
+      function(e) {
+        let data = JSON.parse(e.data);
+        if (data.type == 0) {
+          this.selfName = data.name;
+        } else if (data.type == 1) {
+          //console.log(data.memberList);
+          this.memberList = data.memberList;
+          for(let i = 0;i<this.memberList.length;i++){
+            if(this.selfName == this.memberList[i]){
+              this.memberList[i] = 'me';
+            }
+          }
         } else {
-          strong.innerText = data.name;
+          let contentShow = document.getElementById("contentShow");
+          let p = document.createElement("p");
+          let strong = document.createElement("strong");
+          if (data.name == this.selfName) {
+            strong.innerText = "me";
+          } else {
+            strong.innerText = data.name;
+          }
+          p.appendChild(strong);
+          p.append(data.message);
+          contentShow.appendChild(p);
+          //console.log("Client receive a message from server: "+e.data);
         }
-        p.appendChild(strong);
-        p.append(data.message);
-        contentShow.appendChild(p);
-        //console.log("Client receive a message from server: "+e.data);
-      }
-    }).bind(this));
+      }.bind(this)
+    );
   },
   methods: {
     sendMessage: function() {
       //console.log(this.memberList);
       let content = document.getElementById("contentInput").value;
-      this.ws.send(content);
-      document.getElementById('contentInput').value = '';
+      if (content.trim() == "") {
+        alert("输入内容不能为空!");
+      } else {
+        this.ws.send(content);
+        document.getElementById("contentInput").value = "";
+      }
     }
   }
 };
@@ -162,7 +175,7 @@ strong {
   width: 50vw;
   background: lightcyan;
   left: 10vw;
-  margin-top: 5vh;
+  margin-top: 1vh;
   border: none;
   font-size: 18px;
   border-radius: 20px;
@@ -214,5 +227,19 @@ strong {
 #memberList > ol {
   padding: 0;
   margin: 0;
+}
+#returnToMain{
+  border:none;
+  border-radius: 5px;
+  height:40px;
+  width:100%;
+  margin:0;
+  padding:0;
+  background:rgb(79, 114, 212);
+  text-align: center;
+  text-decoration: none;
+  color:rgb(231, 235, 209);
+  line-height: 40px;
+  font-size: 20px;
 }
 </style>

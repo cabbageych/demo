@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>spiral</title>
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        #outer {
+            position: relative;
+            padding: 0;
+            height: 800px;
+            width: 800px;
+            margin: 0 auto;
+            border:2px solid yellow;
+        }
+
+        #circle {
+            position: relative;
+            margin: 0 auto;
+            height: 100px;
+            width: 100px;
+            border-radius: 50%;
+            background: radial-gradient(red ,yellow 80%);
+            border:none;
+            transform-origin: 50px 400px;
+            animation: test 5s linear infinite;
+        }
+
+        @keyframes test{
+            from{
+                transform: rotate(0deg);
+                transform-origin: 50px 400px;
+            }
+            to{
+                transform: rotate(360deg);
+                transform-origin: 50px 100px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="outer">
+        <div id="circle"></div>
+    </div>
+    <script>
+        let clientWidth = window.screen.availWidth;
+        let clientHeight = window.screen.availHeight;
+
+        function draw() {
+
+            requestAnimationFrame(draw);
+        }
+
+        requestAnimationFrame(draw);
+    </script>
+</body>
+
+</html>

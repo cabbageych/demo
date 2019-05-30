@@ -52,9 +52,9 @@ export default {
         } else if (data.type == 1) {
           //console.log(data.memberList);
           this.memberList = data.memberList;
-          for(let i = 0;i<this.memberList.length;i++){
-            if(this.selfName == this.memberList[i]){
-              this.memberList[i] = 'me';
+          for (let i = 0; i < this.memberList.length; i++) {
+            if (this.selfName == this.memberList[i]) {
+              this.memberList[i] = "me";
             }
           }
         } else {
@@ -228,17 +228,17 @@ strong {
   padding: 0;
   margin: 0;
 }
-#returnToMain{
-  border:none;
+#returnToMain {
+  border: none;
   border-radius: 5px;
-  height:40px;
-  width:100%;
-  margin:0;
-  padding:0;
-  background:rgb(79, 114, 212);
+  height: 40px;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background: rgb(79, 114, 212);
   text-align: center;
   text-decoration: none;
-  color:rgb(231, 235, 209);
+  color: rgb(231, 235, 209);
   line-height: 40px;
   font-size: 20px;
 }

@@ -9,7 +9,8 @@
             padding: 0;
             margin: 0;
             /*background: radial-gradient(rgb(218, 217, 203), rgb(17, 17, 77));*/
-            background:radial-gradient(circle farthest-side at 25% 65%,rgba(17, 16, 16, 0.63),rgb(10, 15, 58));
+            background: radial-gradient(circle farthest-side at 25% 65%, rgba(17, 16, 16, 0.63), rgb(10, 15, 58));
+            overflow: hidden;
         }
 
         #outer {
@@ -20,13 +21,14 @@
         }
 
         #left {
-            width: 30%;
+            width: 40%;
             height: 100%;
-            border-right: 2px solid yellow;
+
         }
 
         #right {
-            width: 70%;
+            width: 60%;
+            height: 100%;
         }
 
         .magicCube {
@@ -86,28 +88,164 @@
                 transform: translateY(-10px) rotateX(360deg) rotateZ(360deg);
             }
         }
-        #bottom{
-            position:absolute;
-            top:50vh;
-            margin-top:100px;
-            left:30vw;
-            margin-left:-250px;
-            height:100px;
-            width:200px;
+
+        #bottom {
+            position: absolute;
+            top: 50vh;
+            margin-top: 100px;
+            left: 30vw;
+            margin-left: -250px;
+            height: 100px;
+            width: 200px;
             border-radius: 50%;
-            border:none;
+            border: none;
             box-shadow: 0 0 20px 0px yellow;
-            background:radial-gradient(white,yellow);
+            background: radial-gradient(white, yellow);
             transform-style: preserve-3d;
             transform: rotateX(60deg);
             animation: light 5s linear infinite alternate;
         }
-        @keyframes light{
-            from{
+
+        @keyframes light {
+            from {
                 box-shadow: 0 0 20px 0px yellow;
             }
-            to{
+
+            to {
                 box-shadow: 0 0 100px 50px yellow;
+            }
+        }
+
+        #focus{
+            position:absolute;
+            height:80px;
+            width:80px;
+            top:50vh;
+            margin-top: -20px;
+            left:30vw;
+            margin-left: 60px;
+            border-radius: 50%;
+            background:radial-gradient(white,gray);
+            box-shadow: 0 0 20px gray;
+        }
+
+        #linear {
+            position: absolute;
+            top: 5vh;
+            height: 90vh;
+            width: 180vh;
+            border-radius: 50%;
+            left: 30vw;
+            margin-left: -90vh;
+            border: 2px solid yellow;
+            z-index: -1;
+        }
+
+        .circle {
+            position: relative;
+            height: 20vh;
+            width: 20vh;
+            border-left: 5px solid yellow;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 15vh;
+            font-size:22px;
+            overflow: hidden;
+            animation:circleRotate 6s linear infinite;
+        }
+
+        .circle::before{
+            position:absolute;
+            content: '';
+            height:18vh;
+            width:18vh;
+            border-right: 5px solid red;
+            border-radius: 50%;
+            top:1vh;
+            left:1vh;
+            animation:circleRotate 6s linear infinite;
+        }
+
+        .circle:after{
+            position:absolute;
+            background: radial-gradient(white,yellow);
+            height: 15vh;
+            width: 15vh;
+            top:2.5vh;
+            left:2.5vh;
+            border-radius: 50%;
+            animation: stay 6s linear infinite;
+        }
+        .circle:hover{
+            border-left: 10px solid red;
+        }
+        .circle:hover:before{
+            border-right: 8px solid yellow;
+        }
+
+        .c1 {
+            top: 0vh;
+            margin-top: 2.5vh;
+            left: 0vw;
+            margin-left: 0px;
+        }
+        .c1:after{
+            content:'个人信息';
+        }
+
+        .c2 {
+            top: -10vh;
+            margin-top: 0px;
+            left: 45vh;
+            margin-left: 0px;
+        }
+        .c2:after{
+            content:'留言板';
+        }
+
+        .c3 {
+            top: 0vh;
+            margin-top: 0px;
+            left: 20vh;
+            margin-left: 0px;
+        }
+        .c3:after{
+            content:'项目展示';
+        }
+
+        .c4 {
+            top: 7.5vh;
+            margin-top: 0px;
+            left: 45vh;
+            margin-left: 0px;
+        }
+        .c4:after{
+            content:'...';
+        }
+
+        .c5{
+            top: 0vh;
+            margin-top: -5vh;
+            left: 0vw;
+            margin-left: 0px;
+        }
+        .c5:after{
+            content:'问题解决';
+        }
+        @keyframes circleRotate{
+            from{
+                transform: rotate(0deg);
+            }
+            to{
+                transform: rotate(360deg);
+            }
+        }
+        @keyframes stay{
+            from{
+                transform: rotate(0deg);
+            }
+            to{
+                transform: rotate(-360deg);
             }
         }
     </style>
@@ -125,8 +263,16 @@
                 <div class="bottom"></div>
             </div>
             <div id="bottom"></div>
+            <div id="focus"></div>
         </div>
-        <div id="right"></div>
+        <div id="right">
+
+            <div class="circle c1"></div>
+            <div class="circle c2"></div>
+            <div class="circle c3"></div>
+            <div class="circle c4"></div>
+            <div class="circle c5"></div>
+        </div>
     </div>
 </body>
 

@@ -112,20 +112,20 @@
             }
 
             to {
-                box-shadow: 0 0 100px 50px yellow;
+                box-shadow: 0 0 150px 50px yellow;
             }
         }
 
-        #focus{
-            position:absolute;
-            height:80px;
-            width:80px;
-            top:50vh;
+        #focus {
+            position: absolute;
+            height: 80px;
+            width: 80px;
+            top: 50vh;
             margin-top: -20px;
-            left:30vw;
+            left: 30vw;
             margin-left: 60px;
             border-radius: 50%;
-            background:radial-gradient(white,gray);
+            background: radial-gradient(white, gray);
             box-shadow: 0 0 20px gray;
         }
 
@@ -149,48 +149,57 @@
             border-radius: 50%;
             text-align: center;
             line-height: 15vh;
-            font-size:22px;
+            font-size: 22px;
             overflow: hidden;
-            animation:circleRotate 6s linear infinite;
+            animation: circleRotate 6s linear infinite;
         }
 
-        .circle::before{
-            position:absolute;
+        .circle::before {
+            position: absolute;
             content: '';
-            height:18vh;
-            width:18vh;
+            height: 18vh;
+            width: 18vh;
             border-right: 5px solid red;
             border-radius: 50%;
-            top:1vh;
-            left:1vh;
-            animation:circleRotate 6s linear infinite;
+            top: 1vh;
+            left: 1vh;
+            animation: circleRotate 6s linear infinite;
         }
 
-        .circle:after{
-            position:absolute;
-            background: radial-gradient(white,yellow);
+        .circle:after {
+            position: absolute;
+            background: radial-gradient(white, yellow);
             height: 15vh;
             width: 15vh;
-            top:2.5vh;
-            left:2.5vh;
+            top: 2.5vh;
+            left: 2.5vh;
             border-radius: 50%;
             animation: stay 6s linear infinite;
         }
-        .circle:hover{
+
+        .circle:hover {
             border-left: 10px solid red;
         }
-        .circle:hover:before{
+
+        .circle:hover:before {
             border-right: 8px solid yellow;
         }
+
 
         .c1 {
             top: 0vh;
             margin-top: 2.5vh;
             left: 0vw;
             margin-left: 0px;
+            border-left: 5px solid black;
         }
-        .c1:after{
-            content:'个人信息';
+
+        .c1::before {
+            border-right: 5px solid white;
+        }
+
+        .c1:after {
+            content: '个人信息';
         }
 
         .c2 {
@@ -198,9 +207,15 @@
             margin-top: 0px;
             left: 45vh;
             margin-left: 0px;
+            border-left: 5px solid rgb(43, 230, 43);
         }
-        .c2:after{
-            content:'留言板';
+
+        .c2::before {
+            border-right: 5px solid rgb(30, 107, 223);
+        }
+
+        .c2:after {
+            content: '留言板';
         }
 
         .c3 {
@@ -208,9 +223,15 @@
             margin-top: 0px;
             left: 20vh;
             margin-left: 0px;
+            border-left: 5px solid rgb(223, 142, 20);
         }
-        .c3:after{
-            content:'项目展示';
+
+        .c3::before {
+            border-right: 5px solid rgb(197, 32, 148);
+        }
+
+        .c3:after {
+            content: '项目展示';
         }
 
         .c4 {
@@ -218,33 +239,49 @@
             margin-top: 0px;
             left: 45vh;
             margin-left: 0px;
-        }
-        .c4:after{
-            content:'...';
+            border-left: 5px solid rgb(230, 35, 181);
         }
 
-        .c5{
+        .c4::before {
+            border-right: 5px solid rgb(30, 216, 230);
+        }
+
+        .c4:after {
+            content: '...';
+        }
+
+        .c5 {
             top: 0vh;
             margin-top: -5vh;
             left: 0vw;
             margin-left: 0px;
+            border-left: 5px solid rgb(22, 231, 162);
         }
-        .c5:after{
-            content:'问题解决';
+
+        .c5::before {
+            border-right: 5px solid rgb(154, 21, 231);
         }
-        @keyframes circleRotate{
-            from{
+
+        .c5:after {
+            content: '问题解决';
+        }
+
+        @keyframes circleRotate {
+            from {
                 transform: rotate(0deg);
             }
-            to{
+
+            to {
                 transform: rotate(360deg);
             }
         }
-        @keyframes stay{
-            from{
+
+        @keyframes stay {
+            from {
                 transform: rotate(0deg);
             }
-            to{
+
+            to {
                 transform: rotate(-360deg);
             }
         }
@@ -252,6 +289,7 @@
 </head>
 
 <body>
+    <canvas id="mycanvas" style="z-index:-1; position:absolute;"></canvas>
     <div id="outer">
         <div id="left">
             <div class="magicCube">
@@ -266,7 +304,6 @@
             <div id="focus"></div>
         </div>
         <div id="right">
-
             <div class="circle c1"></div>
             <div class="circle c2"></div>
             <div class="circle c3"></div>
@@ -274,6 +311,55 @@
             <div class="circle c5"></div>
         </div>
     </div>
+    <script>
+        let clientHeight = document.body.clientHeight;
+        let clientWidth = document.body.clientWidth;
+        //console.log(clientHeight, clientWidth);
+        let canvas = document.getElementById('mycanvas');
+        canvas.height = clientHeight;
+        canvas.width = clientWidth;
+        //canvas.style.background = 'red';
+        let ctx = canvas.getContext('2d');
+        let circles = document.getElementsByClassName('circle');
+        let focus = document.getElementById('focus');
+        let focusPos = { x: focus.offsetLeft + 40, y: focus.offsetTop + 40 };
+        let circlesPos = [];
+        for (let i = 0; i < circles.length; i++) {
+            let temp = {};
+            temp.x = circles[i].offsetLeft;
+            temp.y = circles[i].offsetTop;
+            circlesPos.push(temp);
+        }
+
+
+        function drawLine(circlePos) {
+            ctx.beginPath();
+            ctx.moveTo(focusPos.x, focusPos.y);
+            ctx.lineTo(circlePos.x, circlePos.y);
+            ctx.strokeStyle = 'red';
+            ctx.lineWidth = '10px';
+            ctx.stroke();
+            //ctx.
+        }
+
+
+        for (let i = 0; i < circles.length; i++) {
+            circles[i].addEventListener('mouseenter', (e) => {
+                //console.log(e);
+                if (e.target.tagName == 'DIV') {
+                    focus.style.background = 'radial-gradient(white,yellow)';
+                }
+                let circlePos = { x: e.pageX, y: e.pageY };
+                drawLine(circlePos);
+            });
+            circles[i].addEventListener('mouseleave', (e) => {
+                //console.log(e);
+                if (e.target.tagName == 'DIV') {
+                    focus.style.background = 'radial-gradient(white, gray)';
+                }
+            });
+        }
+    </script>
 </body>
 
 </html>

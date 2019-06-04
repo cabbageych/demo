@@ -2,6 +2,7 @@
 <html>
 
 <head>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
     <meta charset="utf-8">
     <title>mainPage</title>
     <style>
@@ -10,7 +11,7 @@
             margin: 0;
             /*background: radial-gradient(rgb(218, 217, 203), rgb(17, 17, 77));*/
             background: radial-gradient(circle farthest-side at 25% 65%, rgba(17, 16, 16, 0.63), rgb(10, 15, 58));
-            overflow: hidden;
+            overflow-y: hidden;
         }
 
         #outer {
@@ -40,7 +41,6 @@
             width: 200px;
             height: 200px;
             transform-style: preserve-3d;
-
             animation: rotate 10s linear infinite;
         }
 
@@ -103,7 +103,7 @@
             background: radial-gradient(white, yellow);
             transform-style: preserve-3d;
             transform: rotateX(60deg);
-            animation: light 5s linear infinite alternate;
+            animation: light 4s linear infinite alternate;
         }
 
         @keyframes light {
@@ -118,8 +118,8 @@
 
         #focus {
             position: absolute;
-            height: 80px;
-            width: 80px;
+            height: 7.5vh;
+            width: 7.5vh;
             top: 50vh;
             margin-top: -20px;
             left: 30vw;
@@ -127,6 +127,7 @@
             border-radius: 50%;
             background: radial-gradient(white, gray);
             box-shadow: 0 0 20px gray;
+            transition: 1s;
         }
 
         #linear {
@@ -266,6 +267,25 @@
             content: '问题解决';
         }
 
+        #des {
+            position: relative;
+            height:100%;
+            width:30vh;
+            top: -100vh;
+            left: 70vh;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            font-size: 50px;
+            color:rgb(240, 235, 172);
+        }
+
+        #desChild{
+            position:relative;
+            top:45vh;
+            transform: translateY(-50%);
+        }
+
         @keyframes circleRotate {
             from {
                 transform: rotate(0deg);
@@ -304,34 +324,50 @@
             <div id="focus"></div>
         </div>
         <div id="right">
+
             <div class="circle c1"></div>
             <div class="circle c2"></div>
             <div class="circle c3"></div>
             <div class="circle c4"></div>
             <div class="circle c5"></div>
+            <div  id="des">
+                <p id="desChild">designer<br>
+                    &<br>
+                    developer</p>
+            </div>
         </div>
     </div>
     <script>
+        //监听窗口大小改变
+        window.onresize = function () {
+            location.reload();
+        }
+        //获取屏幕宽高
         let clientHeight = document.body.clientHeight;
         let clientWidth = document.body.clientWidth;
-        //console.log(clientHeight, clientWidth);
+
+        //使用canvas画线条
         let canvas = document.getElementById('mycanvas');
+        canvas.style.background = 'radial-gradient(circle farthest-side at 25% 65%, rgba(17, 16, 16, 0.63), rgb(10, 15, 58))';
         canvas.height = clientHeight;
         canvas.width = clientWidth;
-        //canvas.style.background = 'red';
         let ctx = canvas.getContext('2d');
+
+        //获取‘焦点’以及各圆信息
         let circles = document.getElementsByClassName('circle');
-        //console.log(circles[0])
         let focus = document.getElementById('focus');
-        let focusPos = { x: focus.offsetLeft + 40, y: focus.offsetTop + 40 };
+        let focusH = window.getComputedStyle(focus)['height'];
+        let focusW = window.getComputedStyle(focus)['width'];
+        focusH = focusH.substr(0, focusH.length - 2);
+        focusW = focusW.substr(0, focusW.length - 2);
+        let focusPos = { x: focus.offsetLeft + (focusW / 2), y: focus.offsetTop + (focusH / 2) };
+
         let circlesPos = [];
         let height = window.getComputedStyle(circles[0])['height'];
         let width = window.getComputedStyle(circles[0])['width'];
         height = height.substr(0, height.length - 2);
         width = width.substr(0, width.length - 2);
-        console.log(height.substr(0, height.length - 2));
         for (let i = 0; i < circles.length; i++) {
-            //console.log(window.getComputedStyle(circles[i])['height'], window.getComputedStyle(circles[i])['width']);
             let temp = {};
             temp.x = circles[i].offsetLeft + (width / 2);
             temp.y = circles[i].offsetTop + (height / 2);
@@ -340,28 +376,43 @@
 
 
         function drawLine(circlePos) {
+            let center01 = {};
+            let center02 = {};
+            let center03 = {};
+            center02.x = (focusPos.x + circlePos.x) / 2;
+            center02.y = (focusPos.y + circlePos.y) / 2;
+            center01.x = (focusPos.x + center02.x) / 2;
+            center01.y = (focusPos.y + center02.y) / 2;
+            center03.x = (circlePos.x + center02.x) / 2;
+            center03.y = (circlePos.y + center02.y) / 2;
             ctx.beginPath();
             ctx.moveTo(focusPos.x, focusPos.y);
+            ctx.lineTo(center01.x, center01.y);
+            ctx.lineTo(center02.x, center02.y);
+            ctx.lineTo(center03.x, center03.y);
             ctx.lineTo(circlePos.x, circlePos.y);
-            ctx.strokeStyle = 'red';
-            ctx.lineWidth = '10px';
-            ctx.stroke();
-            //ctx.
-        }
 
+            ctx.strokeStyle = 'yellow';
+            ctx.lineWidth = focusH / 3;
+            ctx.stroke();
+        }
 
         for (let i = 0; i < circles.length; i++) {
             circles[i].addEventListener('mouseenter', (e) => {
                 //console.log(e);
                 if (e.target.tagName == 'DIV') {
                     focus.style.background = 'radial-gradient(white,yellow)';
+                    focus.style.boxShadow = '0 0 50px yellow';
+                    //drawLine(circlesPos[i]);
                 }
-                drawLine(circlesPos[i]);
+
             });
             circles[i].addEventListener('mouseleave', (e) => {
                 //console.log(e);
                 if (e.target.tagName == 'DIV') {
                     focus.style.background = 'radial-gradient(white, gray)';
+                    focus.style.boxShadow = 'none';
+                    ctx.clearRect(0, 0, clientWidth, clientHeight);
                 }
             });
         }

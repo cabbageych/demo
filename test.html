@@ -321,13 +321,20 @@
         //canvas.style.background = 'red';
         let ctx = canvas.getContext('2d');
         let circles = document.getElementsByClassName('circle');
+        //console.log(circles[0])
         let focus = document.getElementById('focus');
         let focusPos = { x: focus.offsetLeft + 40, y: focus.offsetTop + 40 };
         let circlesPos = [];
+        let height = window.getComputedStyle(circles[0])['height'];
+        let width = window.getComputedStyle(circles[0])['width'];
+        height = height.substr(0, height.length - 2);
+        width = width.substr(0, width.length - 2);
+        console.log(height.substr(0, height.length - 2));
         for (let i = 0; i < circles.length; i++) {
+            //console.log(window.getComputedStyle(circles[i])['height'], window.getComputedStyle(circles[i])['width']);
             let temp = {};
-            temp.x = circles[i].offsetLeft;
-            temp.y = circles[i].offsetTop;
+            temp.x = circles[i].offsetLeft + (width / 2);
+            temp.y = circles[i].offsetTop + (height / 2);
             circlesPos.push(temp);
         }
 
@@ -349,8 +356,7 @@
                 if (e.target.tagName == 'DIV') {
                     focus.style.background = 'radial-gradient(white,yellow)';
                 }
-                let circlePos = { x: e.pageX, y: e.pageY };
-                drawLine(circlePos);
+                drawLine(circlesPos[i]);
             });
             circles[i].addEventListener('mouseleave', (e) => {
                 //console.log(e);

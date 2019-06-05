@@ -14,7 +14,7 @@
             overflow-y: hidden;
         }
 
-        #outer {
+        #wrap {
             display: flex;
             height: 100vh;
             width: 100vw;
@@ -310,7 +310,7 @@
 
 <body>
     <canvas id="mycanvas" style="z-index:-1; position:absolute;"></canvas>
-    <div id="outer">
+    <div id="wrap">
         <div id="left">
             <div class="magicCube">
                 <div class="font"></div>
@@ -374,7 +374,7 @@
             circlesPos.push(temp);
         }
 
-
+        //等待更新
         function drawLine(circlePos) {
             let center01 = {};
             let center02 = {};

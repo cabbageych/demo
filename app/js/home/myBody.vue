@@ -17,7 +17,7 @@
       </nav>
       <div id="mainPart">
         <div class="test" v-for="(item,key,index) in resultsTemp">
-          <img :src="item.src" title="点击图片查看详情" @click="showDetail(item)">
+          <img :src="returnSrc(item)" title="点击图片查看详情" @click="showDetail(item)">
           <p class="p1">{{item.name}}</p>
           <p class="p2">
             <label>价格:</label>
@@ -56,7 +56,7 @@ export default {
     return {
       resultsTemp: [],
       results: [
-        {
+        /*{
           id: 111,
           type: 3,
           name: "薛定谔的滑稽",
@@ -107,7 +107,7 @@ export default {
           name: "薛定谔的滑稽08",
           price: 999,
           src: url
-        }
+        }*/
       ],
       showlist01: false,
       showlist02: false,
@@ -119,6 +119,10 @@ export default {
     };
   },
   methods: {
+    returnSrc: function(item) {
+      //console.log(this);
+      return item.src;
+    },
     hideDetail: function() {
       detailWindow.style.display = "none";
     },
@@ -127,11 +131,11 @@ export default {
       detailWindow.style.display = "block";
       detailWindow.childNodes[0].src = item.src;
       let temp = detailWindow.childNodes[2].childNodes;
-      temp[0].innerHTML = '商品名称: '+item.name;
-      temp[2].innerHTML = '价格: '+item.price;
-      temp[4].innerHTML = '仓库剩余: '+item.totalCount;
-      temp[6].innerHTML = '详情: '+item.des;
-      temp[8].innerHTML = '卖家: '+item.sellerName;
+      temp[0].innerHTML = "商品名称: " + item.name;
+      temp[2].innerHTML = "价格: " + item.price;
+      temp[4].innerHTML = "仓库剩余: " + item.totalCount;
+      temp[6].innerHTML = "详情: " + item.des;
+      temp[8].innerHTML = "卖家: " + item.sellerName;
     },
     scrollTopToZero: function() {
       mainPart.scrollTop = 0;
@@ -183,18 +187,18 @@ export default {
         return response.json();
       })
       .then(val => {
-        console.log(val);
+        this.results = val;
+
+        this.resultsTemp = this.results;
+        console.log(this.resultsTemp);
+        let tempCount = localStorage.getItem("cartNum");
+        if (tempCount >= 0) {
+          this.countTest = tempCount;
+        }
+        let mainPart = document.getElementById("mainPart");
+        let topButon = document.getElementById("topButton");
+        mainPart.addEventListener("scroll", this.returnToTop);
       });
-    for (let i = 0; i < 100; i++) {
-      this.resultsTemp.push(this.results[2]);
-    }
-    let tempCount = localStorage.getItem("cartNum");
-    if (tempCount >= 0) {
-      this.countTest = tempCount;
-    }
-    let mainPart = document.getElementById("mainPart");
-    let topButon = document.getElementById("topButton");
-    mainPart.addEventListener("scroll", this.returnToTop);
   }
 };
 </script>
@@ -210,29 +214,30 @@ export default {
   position: absolute;
   height: 600px;
   width: 600px;
-  background: rgb(153, 247, 250);
+  background: rgb(199, 236, 236);
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
-  font-size:20px;
+  font-size: 20px;
 }
-#detailWindow p{
-  margin:0;
-  margin-top:10px;
-  padding:0;
+#detailWindow p {
+  margin: 0;
+  margin-top: 10px;
+  padding: 0;
 }
-#detailWindow button{
-  border:none;
-  margin-top:10px;
+#detailWindow button {
+  border: none;
+  margin-top: 10px;
   border-radius: 10px;
   font-size: 18px;
-  height:40px;
-  width:60px;
+  height: 40px;
+  width: 60px;
 }
-#detailWindow button:focus,#detailWindow button:hover{
-  outline:none;
-  border:2px solid rgb(73, 69, 69);
+#detailWindow button:focus,
+#detailWindow button:hover {
+  outline: none;
+  border: 2px solid rgb(73, 69, 69);
   background: yellow;
 }
 #topButton {

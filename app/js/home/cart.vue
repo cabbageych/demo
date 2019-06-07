@@ -56,7 +56,7 @@ export default {
     sub: function() {
       let sure = confirm("是否确认下单?");
       if (sure) {
-        //console.log(this.value);
+        console.log(this.value);
         fetch("http://localhost:8080", {
           method: "POST",
           headers: {

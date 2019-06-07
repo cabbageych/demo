@@ -20,6 +20,7 @@ var server = http.createServer((request, response) => {
             response.end();
         })
     } else if (request.method == 'GET') {
+        let imageUrl='images/huaji.jpg';
         //fs.readFile(pathname.substr(1), (err, data) => {});
         let data = [
             {
@@ -27,42 +28,60 @@ var server = http.createServer((request, response) => {
                 type: 3,
                 name: "薛定谔的滑稽",
                 price: 999,
-                src: url
+                src: imageUrl,
+                des: "emmmm des for test!",
+                totalCount: 99,
+                sellerName: "cabbage"
             },
             {
                 id: 222,
                 type: 4,
                 name: "薛定谔的滑稽02",
                 price: 999,
-                src: url
+                src: imageUrl,
+                des: "emmmm des for test!",
+                totalCount: 99,
+                sellerName: "cabbage"
             },
             {
                 id: 333,
                 type: 1,
                 name: "薛定谔的滑稽03",
                 price: 999,
-                src: url
+                src: imageUrl,
+                des: "emmmm des for test!",
+                totalCount: 99,
+                sellerName: "cabbage"
             },
             {
                 id: 444,
                 type: 1,
                 name: "薛定谔的滑稽04",
                 price: 999,
-                src: url
+                src: imageUrl,
+                des: "emmmm des for test!",
+                totalCount: 99,
+                sellerName: "cabbage"
             },
             {
                 id: 555,
                 type: 1,
                 name: "薛定谔的滑稽05",
                 price: 999,
-                src: url
+                src: imageUrl,
+                des: "emmmm des for test!",
+                totalCount: 99,
+                sellerName: "cabbage"
             },
             {
                 id: 666,
                 type: 6,
                 name: "薛定谔的滑稽06",
                 price: 999,
-                src: url
+                src: imageUrl,
+                des: "emmmm des for test!",
+                totalCount: 99,
+                sellerName: "cabbage"
             }
         ];
         response.write(JSON.stringify(data));
@@ -93,5 +112,5 @@ data = {
     id:'',   //商品id
     type:'',  //商品类别编码
     name:'',   //商品名称
-    count:'',  //购物车数量
+    count:'',  //对应商品数量
 }*/

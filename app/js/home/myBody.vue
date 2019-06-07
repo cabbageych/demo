@@ -183,7 +183,8 @@ export default {
     fetch("http://localhost:8080", {
       method: "GET"
     })
-      .then(response => {
+      .then(response => { 
+        
         return response.json();
       })
       .then(val => {

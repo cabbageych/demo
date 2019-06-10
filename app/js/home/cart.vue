@@ -36,6 +36,7 @@
 </template>
 <script>
 export default {
+  props:['cart'],
   data() {
     return {
       value: "",
@@ -47,16 +48,14 @@ export default {
       let sure = confirm("是否删除本项目?");
       if (sure) {
         this.value.splice(a, 1);
-        localStorage.setItem("cart", JSON.stringify(this.value));
-        let tempCount = localStorage.getItem("cartNum");
-        --tempCount;
-        localStorage.setItem("cartNum", tempCount);
+        //console.log(a);
+        this.$emit('deleteItem',a);
       }
     },
     sub: function() {
       let sure = confirm("是否确认下单?");
       if (sure) {
-        console.log(this.value);
+        //console.log(this.value);
         fetch("http://localhost:8080", {
           method: "POST",
           headers: {
@@ -66,21 +65,23 @@ export default {
         }).then((response)=>{
           return response.text();
         }).then((val)=>{
-          console.log(val);
+          //console.log(val);
+          val = (val.toString()).trim();
+          if(val == 'failed'){
+            alert("订单中的商品库存不足，请重新选择!");
+          }else{
+            alert("下单成功!");
+          }
         });
-        localStorage.setItem("cart", "[]");
         this.value = "";
-        localStorage.setItem("cartNum", 0);
+        this.$emit('clearCart');
       }
     }
   },
   mounted() {
-    let temp = localStorage.getItem("cart");
-    if (temp === "[]") {
-      this.value = [];
-    } else {
-      this.value = JSON.parse(localStorage.getItem("cart"));
-    }
+    //console.log('cart:');
+    //console.log(this.cart);
+    this.value = this.cart;
   },
   computed: {
     totalShow: {

@@ -7,13 +7,13 @@
         <p v-if="showlist01" @click="showType(1)">衣裤</p>
         <div @click="showlist02 = !showlist02">电子数码</div>
         <p v-if="showlist02" @click="showType(2)">手机</p>
-        <p v-if="showlist02">电脑</p>
+        <p v-if="showlist02" @click="showType(3)">电脑</p>
         <div @click="showlist03 = !showlist03">食品</div>
-        <p v-if="showlist03" @click="showType(3)">零食</p>
-        <p v-if="showlist03" @click="showType(4)">生鲜</p>
+        <p v-if="showlist03" @click="showType(4)">零食</p>
+        <p v-if="showlist03" @click="showType(5)">生鲜</p>
         <div @click="showlist04 = !showlist04">文体办公</div>
-        <p v-if="showlist04" @click="showType(5)">体育用品</p>
-        <p v-if="showlist04" @click="showType(6)">办公用品</p>
+        <p v-if="showlist04" @click="showType(6)">体育用品</p>
+        <p v-if="showlist04" @click="showType(7)">办公用品</p>
       </nav>
       <div id="mainPart">
         <div class="test" v-for="(item,key,index) in resultsTemp">
@@ -23,7 +23,7 @@
             <label>价格:</label>
             ¥{{item.price}}&nbsp;&nbsp;
             <button
-              @click="addToCart(key)"
+              @click="addToCart($event,key)"
               class="addCart"
             >加入购物车</button>
           </p>
@@ -35,9 +35,9 @@
       <img
         src="#"
         id="img"
-        style="display:inline-block;height:300px;width:300px;position:absolute;"
+        style="display:inline-block;height:300px;width:300px;position:relative;margin:0 auto;"
       >
-      <div style="position:relative;top:320px;">
+      <div style="position:relative;">
         <p id="name"></p>
         <p id="price"></p>
         <p id="totalCount"></p>
@@ -114,7 +114,6 @@ export default {
       showlist03: false,
       showlist04: false,
       cart: [],
-      countTest: 0,
       timer: null
     };
   },
@@ -148,21 +147,17 @@ export default {
         }
       }
     },
-    addToCart: function(num) {
-      this.cart = JSON.parse(localStorage.getItem("cart"));
-      this.cart.push({
-        id: this.results[num].id,
-        type: this.results[num].type,
-        name: this.results[num].name,
-        price: this.results[num].price,
-        count: 1
-      });
-      localStorage.setItem("cart", JSON.stringify(this.cart));
-      ++this.countTest;
-      this.$emit("cartNum", this.countTest); //向父组件传值
+    addToCart: function(e, num) {
+      let tempCart = {};
+      tempCart.id = this.results[num].id;
+      tempCart.type = this.results[num].type;
+      tempCart.name = this.results[num].name;
+      tempCart.price = this.results[num].price;
+      tempCart.count = 1;
+      this.$emit("cart", tempCart); //向父组件传值
     },
     returnToTop: function(e) {
-      if (e.target.scrollTop > 500) {
+      if (e.target.scrollTop > 350) {
         this.showTopTag(e);
       }
     },
@@ -180,18 +175,18 @@ export default {
     }
   },
   mounted() {
+    //console.log("myBody:");
     fetch("http://localhost:8080", {
       method: "GET"
     })
-      .then(response => { 
-        
+      .then(response => {
         return response.json();
       })
       .then(val => {
         this.results = val;
 
         this.resultsTemp = this.results;
-        console.log(this.resultsTemp);
+        //console.log(this.resultsTemp);
         let tempCount = localStorage.getItem("cartNum");
         if (tempCount >= 0) {
           this.countTest = tempCount;
@@ -221,6 +216,9 @@ export default {
   transform: translate(-50%, -50%);
   text-align: center;
   font-size: 20px;
+}
+#detailWindow img{
+  left:-65px;
 }
 #detailWindow p {
   margin: 0;
@@ -268,7 +266,7 @@ export default {
 nav {
   text-align: center;
   width: 12%;
-  height: 100vh;
+
   background: rgb(205, 243, 243);
   font-size: 23px;
   white-space: nowrap;
@@ -299,23 +297,30 @@ nav p:active {
 }
 
 #mainPart {
-  width: 88%;
-  height: 100vh;
-  position: relative;
-  background: rgb(212, 225, 228);
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
   flex-direction: row;
   overflow: auto;
+  width: 88%;
+  height: 100vh;
+  padding-bottom: 30px;
+  position: relative;
+  background: rgb(212, 225, 228);
+  padding-bottom: 50px;
 }
 .test {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   position: relative;
   height: 20vw;
   width: 20vw;
   background: rgb(229, 235, 202);
-  display: inline-block;
   padding: 0;
   margin: 0;
-  margin-top: 10px;
   margin-left: 1%;
+  margin-bottom: 20px;
   overflow: hidden;
   font-size: 18px;
 }
@@ -323,27 +328,22 @@ img {
   position: relative;
   height: 70%;
   width: 70%;
-  top: 0;
-  left: 15%;
   margin: 0;
   padding: 0;
 }
 .p1 {
   position: relative;
-  left: 50%;
-  transform: translate(-20%, 0);
-  margin: 10px 0 0 0;
   padding: 0;
 }
 .p2 {
   position: relative;
-  left: 50%;
-  transform: translate(-30%, 0);
-  margin: 10px 0 0 0;
   padding: 0;
+  margin-top: -10px;
+  white-space: nowrap;
+  overflow-x: hidden;
+  overflow-y: hidden;
 }
 .price {
-  display: inline-block;
 }
 .addCart {
   border: none;

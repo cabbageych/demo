@@ -12,17 +12,19 @@
             <strong v-if="show06" style="color:purple;">A</strong>
           </span>
         </transition>
-        <span class="tail">网上商城</span>
+        <span class="tail">商城</span>
       </div>
-      <a class="a1" href="#">商家入口</a>
-      <button class="a2" @click="toCart()">
-        我的购物车&nbsp;&nbsp;
-        <strong id="showCartNum">{{childValue}}</strong>
-      </button>
-      <button class="a3" @click="toMainPage()">主页</button>
+      <div id="headerBottom">
+        <a class="a1" href="./login.html">商家入口</a>
+        <button class="a2" @click="toCart()">
+          我的购物车&nbsp;&nbsp;
+          <strong id="showCartNum">{{childValue}}</strong>
+        </button>
+        <button class="a3" @click="toMainPage()">主页</button>
+      </div>
     </header>
-    <myBody v-on:cartNum="showChildValue" v-if="childShow"></myBody>
-    <cart v-else></cart>
+    <myBody v-on:cart="addToCart" v-if="childShow"></myBody>
+    <cart :cart="cart" v-on:deleteItem="delCart" v-on:clearCart="clearCart" v-else></cart>
   </div>
 </template>
 <script>
@@ -45,7 +47,8 @@ export default {
       show04: false,
       show05: false,
       show06: false,
-      childValue: 0
+      childValue: 0,
+      cart: []
     };
   },
   methods: {
@@ -68,35 +71,50 @@ export default {
         this.show06 = !this.show06;
       }
     },
-    showChildValue: function(val) {
-      this.childValue = val;
+    clearCart: function() {
+      this.cart = [];
+      this.childValue = 0;
+    },
+    delCart: function(val) {
+      this.childValue = this.cart.length;
+    },
+    addToCart: function(cartTemp) {
+      let flag = false;
+      for (let i = 0; i < this.cart.length; i++) {
+        if (this.cart[i].id == cartTemp.id) {
+          flag = true;
+          this.cart[i].count = this.cart[i].count + 1;
+          break;
+        }
+      }
+      if (!flag) {
+        this.cart.push(cartTemp);
+      }
+      this.childValue = this.cart.length;
     },
     toCart: function() {
       if (this.childShow == true) {
         this.childShow = false;
-        localStorage.setItem("cartNum", this.childValue);
       }
     },
     toMainPage: function() {
       if (this.childShow == false) {
         this.childShow = true;
-        let tempCount = localStorage.getItem("cartNum");
-        if (tempCount != this.childValue) {
-          this.childValue = tempCount;
-        }
       }
     }
   },
   mounted() {
     setInterval(this.changeShow, 600);
-    localStorage.setItem("cart", "[]");
   },
-  computed: {
-    
-  }
+  computed: {}
 };
 </script>
 <style>
+html,body{
+  margin:0;
+  padding:0;
+}
+body::-webkit-scrollbar { width: 0 !important }
 div,
 span,
 strong,
@@ -111,30 +129,24 @@ p {
 }
 header {
   background: whitesmoke;
-  height: 120px;
+  height: 90px;
   position: relative;
   overflow-x: auto;
 }
 .name {
   text-align: center;
   font-size: 3rem;
-  line-height: 120px;
+  line-height: 60px;
 }
 .a1 {
-  position: absolute;
-  left: 50%;
-  bottom: 35px;
-  margin-left: 220px;
+  margin-right: 30px;
   font-size: 20px;
   text-decoration: none;
   color: lightcoral;
   overflow: auto;
 }
 .a2 {
-  position: absolute;
-  left: 50%;
-  bottom: 35px;
-  margin-left: 330px;
+  margin-right: 30px;
   font-size: 20px;
   text-decoration: none;
   color: lightcoral;
@@ -143,10 +155,7 @@ header {
   padding: 0;
 }
 .a3 {
-  position: absolute;
-  left: 50%;
-  bottom: 35px;
-  margin-left: 480px;
+  margin-right: 100px;
   font-size: 20px;
   text-decoration: none;
   color: lightcoral;
@@ -154,7 +163,19 @@ header {
   background: transparent;
   padding: 0;
 }
-
+header {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+}
+#headerBottom{
+  display: flex;
+  width:100%;
+  flex-direction: row;
+  justify-content: flex-end;
+}
 #showCartNum {
   color: black;
   text-indent: 2em;
@@ -174,14 +195,12 @@ header > a:hover:active {
   text-decoration: underline;
 }
 .head {
-  position: absolute;
-  left: 50%;
-  margin-left: -320px;
-  font-size:55px;
+  position: relative;
+  height:60px;
+  font-size: 55px;
 }
 .tail {
-  position: absolute;
-  left: 50%;
+  margin-left: 20px;
 }
 /*
 .title-enter-active,

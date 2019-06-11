@@ -55,7 +55,7 @@ var server = http.createServer((request, response) => {
             },
             {
                 id: 444,
-                type: 1,
+                type: 2,
                 name: "薛定谔的滑稽04",
                 price: 999,
                 url: imageUrl,
@@ -95,7 +95,7 @@ var server = http.createServer((request, response) => {
             },
             {
                 id: 888,
-                type: 1,
+                type: 5,
                 name: "薛定谔的滑稽05",
                 price: 999,
                 url: imageUrl,
@@ -106,6 +106,46 @@ var server = http.createServer((request, response) => {
             {
                 id: 999,
                 type: 6,
+                name: "薛定谔的滑稽06",
+                price: 999,
+                url: imageUrl,
+                description: "emmmm des for test!",
+                totalCount: 99,
+                shopName: "cabbage"
+            },
+            {
+                id: 999,
+                type: 7,
+                name: "薛定谔的滑稽06",
+                price: 999,
+                url: imageUrl,
+                description: "emmmm des for test!",
+                totalCount: 99,
+                shopName: "cabbage"
+            },
+            {
+                id: 888,
+                type: 5,
+                name: "薛定谔的滑稽05",
+                price: 999,
+                url: imageUrl,
+                description: "emmmm des for test!",
+                totalCount: 99,
+                shopName: "cabbage"
+            },
+            {
+                id: 999,
+                type: 6,
+                name: "薛定谔的滑稽06",
+                price: 999,
+                url: imageUrl,
+                description: "emmmm des for test!",
+                totalCount: 99,
+                shopName: "cabbage"
+            },
+            {
+                id: 999,
+                type: 2,
                 name: "薛定谔的滑稽06",
                 price: 999,
                 url: imageUrl,

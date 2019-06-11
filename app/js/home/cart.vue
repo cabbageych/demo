@@ -108,7 +108,9 @@ export default {
         this.totalPrice = temp;
         return this.totalPrice;
       },
-      set() {}
+      set() {
+        
+      }
     }
   }
 };

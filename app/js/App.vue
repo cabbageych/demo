@@ -23,7 +23,7 @@
         <button class="a3" @click="toMainPage()">主页</button>
       </div>
     </header>
-    <myBody v-on:cart="addToCart" v-if="childShow"></myBody>
+    <myBody v-on:showTypeAll="showAll" v-on:cart="addToCart" v-if="childShow"></myBody>
     <cart :cart="cart" v-on:deleteItem="delCart" v-on:clearCart="clearCart" v-else></cart>
   </div>
 </template>
@@ -70,6 +70,9 @@ export default {
       } else if (this.count == 6) {
         this.show06 = !this.show06;
       }
+    },
+    showAll:function(temp,result){
+      temp = result;
     },
     clearCart: function() {
       this.cart = [];
@@ -125,7 +128,6 @@ p {
   display: flex;
   display: -webkit-flex;
   flex-direction: column;
-  background: lightyellow;
 }
 header {
   background: whitesmoke;

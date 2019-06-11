@@ -3,20 +3,25 @@
     <div class="cart">
       <div class="content">
         <div>
-          <table>
+          <table style="border-collapse: collapse;">
             <tr>
               <th>商品名称</th>
               <th>单价</th>
               <th>购买数量</th>
               <th>操作</th>
             </tr>
-            <tr v-for="(item,index) in value">
+            <tr style="position:relative;border:25px solid transparent;" v-for="(item,index) in value">
               <td>{{item.name}}</td>
               <td style="color:red;">¥{{item.price}}</td>
               <td>
-                <button @click="++item.count">+</button>
-                <span style="color:blue;">{{item.count}}</span>
                 <button v-if="item.count>1" @click="--item.count">-</button>
+                <input
+                  style="box-shadow:0 0 3px gray;height:25px;border:none;font-size:18px;width:40px;border-radius:5px;"
+                  type="text"
+                  :value="item.count"
+                  @change="countChange($event,item)"
+                >
+                <button @click="++item.count">+</button>
               </td>
               <td style="color:red;" @click="del(index)">删除</td>
             </tr>
@@ -26,7 +31,7 @@
       <footer>
         <span>
           <label style="color:red;">总价:</label>
-          {{totalShow}}
+          ¥{{totalShow}}
         </span>
         &nbsp;&nbsp;
         <button @click="sub()">确认下单</button>
@@ -36,7 +41,7 @@
 </template>
 <script>
 export default {
-  props:['cart'],
+  props: ["cart"],
   data() {
     return {
       value: "",
@@ -44,37 +49,47 @@ export default {
     };
   },
   methods: {
+    countChange: function(e, item) {
+      item.count = e.target.value;
+      console.log(item.count);
+    },
     del: function(a) {
       let sure = confirm("是否删除本项目?");
       if (sure) {
         this.value.splice(a, 1);
         //console.log(a);
-        this.$emit('deleteItem',a);
+        this.$emit("deleteItem", a);
       }
     },
     sub: function() {
       let sure = confirm("是否确认下单?");
       if (sure) {
-        //console.log(this.value);
-        fetch("http://localhost:8080", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify(this.value),
-        }).then((response)=>{
-          return response.text();
-        }).then((val)=>{
-          //console.log(val);
-          val = (val.toString()).trim();
-          if(val == 'failed'){
-            alert("订单中的商品库存不足，请重新选择!");
-          }else{
-            alert("下单成功!");
-          }
-        });
-        this.value = "";
-        this.$emit('clearCart');
+        if (this.value.length == 0) {
+          alert("您还没有添加购物车!");
+        } else {
+          //console.log(this.value);
+          fetch("http://localhost:8080", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(this.value)
+          })
+            .then(response => {
+              return response.text();
+            })
+            .then(val => {
+              //console.log(val);
+              val = val.toString().trim();
+              if (val == "failed") {
+                alert("订单中的商品库存不足，请重新选择!");
+              } else {
+                alert("下单成功!");
+              }
+            });
+          this.value = "";
+          this.$emit("clearCart");
+        }
       }
     }
   },
@@ -106,19 +121,21 @@ export default {
 .content {
   position: relative;
   width: 60%;
-  background: rgb(255, 239, 224);
+
   align-self: center;
 }
 table {
+  position:relative;
   font-size: 20px;
   width: 100%;
   text-align: center;
 }
 
 footer {
+  margin-top: 50px;
   position: relative;
   height: 80px;
-  background: rgb(243, 198, 180);
+  box-shadow: 0 0 2px gray;
   text-align: center;
   border-radius: 5px;
 }
@@ -129,12 +146,12 @@ footer > button {
   font-size: 18px;
   border-radius: 5px;
   border: none;
+  background: rgb(78, 107, 236);
+  color: white;
 }
 footer > button:hover,
 footer > button:active {
-  background: lightblue;
-  color: white;
-  border: 2px solid yellow;
+  background: rgb(40, 26, 226);
 }
 footer > span {
   position: relative;

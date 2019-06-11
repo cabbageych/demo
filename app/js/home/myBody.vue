@@ -14,6 +14,7 @@
         <div @click="showlist04 = !showlist04">文体办公</div>
         <p v-if="showlist04" @click="showType(6)">体育用品</p>
         <p v-if="showlist04" @click="showType(7)">办公用品</p>
+        <div @click="showTypeAll">商品全种类展示</div>
       </nav>
       <div id="mainPart">
         <div class="test" v-for="(item,key,index) in resultsTemp">
@@ -46,6 +47,7 @@
         <button @click="hideDetail">返回</button>
       </div>
     </div>
+    <p id="p" style="position:absolute;color:rgb(31, 196, 80);display:none;font-size:20px;">添加成功!</p>
   </div>
 </template>
 <script>
@@ -120,7 +122,10 @@ export default {
   methods: {
     returnSrc: function(item) {
       //console.log(this);
-      return item.src;
+      //console.log(item.url);
+      //console.log('test');
+      //console.log((item.src).replace('img//','img/'));
+      return item.url;
     },
     hideDetail: function() {
       detailWindow.style.display = "none";
@@ -128,16 +133,19 @@ export default {
     showDetail: function(item) {
       let detailWindow = document.getElementById("detailWindow");
       detailWindow.style.display = "block";
-      detailWindow.childNodes[0].src = item.src;
+      detailWindow.childNodes[0].src = item.url;
       let temp = detailWindow.childNodes[2].childNodes;
       temp[0].innerHTML = "商品名称: " + item.name;
       temp[2].innerHTML = "价格: " + item.price;
       temp[4].innerHTML = "仓库剩余: " + item.totalCount;
-      temp[6].innerHTML = "详情: " + item.des;
-      temp[8].innerHTML = "卖家: " + item.sellerName;
+      temp[6].innerHTML = "详情: " + item.description;
+      temp[8].innerHTML = "卖家: " + item.shopName;
     },
     scrollTopToZero: function() {
       mainPart.scrollTop = 0;
+    },
+    showTypeAll:function(){
+      this.resultsTemp = this.results;
     },
     showType: function(type) {
       this.resultsTemp = [];
@@ -148,6 +156,10 @@ export default {
       }
     },
     addToCart: function(e, num) {
+      let p = document.getElementById('p');
+      p.style.left = e.pageX-10;
+      p.style.top = e.pageY+3;
+      p.style.display = 'block';
       let tempCart = {};
       tempCart.id = this.results[num].id;
       tempCart.type = this.results[num].type;
@@ -155,6 +167,10 @@ export default {
       tempCart.price = this.results[num].price;
       tempCart.count = 1;
       this.$emit("cart", tempCart); //向父组件传值
+      setTimeout(()=>{
+        let p = document.getElementById('p');
+        p.style.display = 'none';
+      },1000);
     },
     returnToTop: function(e) {
       if (e.target.scrollTop > 350) {
@@ -183,8 +199,10 @@ export default {
         return response.json();
       })
       .then(val => {
+        for(let i = 0;i<val.length;i++){
+          console.log(val[i]);
+        }
         this.results = val;
-
         this.resultsTemp = this.results;
         //console.log(this.resultsTemp);
         let tempCount = localStorage.getItem("cartNum");
@@ -200,6 +218,7 @@ export default {
 </script>
 <style>
 #img {
+  color:rgb(31, 196, 80);
   margin: 0;
   padding: 0;
   transform: translateX(20%);
@@ -210,12 +229,15 @@ export default {
   position: absolute;
   height: 600px;
   width: 600px;
-  background: rgb(199, 236, 236);
+  box-shadow: 0 0 20px gray;
+  background: white;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
   font-size: 20px;
+  border-radius: 20px;
+  padding-top:30px;
 }
 #detailWindow img{
   left:-65px;
@@ -232,12 +254,15 @@ export default {
   font-size: 18px;
   height: 40px;
   width: 60px;
+  background: rgb(83, 73, 230);
+  color:white;
 }
 #detailWindow button:focus,
 #detailWindow button:hover {
   outline: none;
   border: 2px solid rgb(73, 69, 69);
   background: yellow;
+  color:black;
 }
 #topButton {
   position: absolute;
@@ -267,33 +292,33 @@ nav {
   text-align: center;
   width: 12%;
 
-  background: rgb(205, 243, 243);
+  background: rgb(245, 243, 243);
   font-size: 23px;
   white-space: nowrap;
 }
 nav div:not(:first-child) {
   border-radius: 6px;
-  border: 1px solid rgb(247, 247, 245);
-  background: rgb(228, 225, 225);
+  border: 1px solid rgb(188, 230, 243);
+  background: rgb(169, 212, 238);
 }
 
 nav div:not(:first-child):active,
 nav div:not(:first-child):hover {
   color: white;
-  background: rgb(129, 129, 77);
+  background: rgb(54, 78, 212);
 }
 nav p {
   position: relative;
   background: white;
   margin: 0;
   padding: 0;
-  color: rgb(236, 133, 236);
+  color: rgb(104, 108, 109);
   border-radius: 5px;
   border: 1px solid rgb(165, 164, 164);
 }
 nav p:hover,
 nav p:active {
-  color: rgb(42, 114, 209);
+  color: rgb(238, 49, 153);
 }
 
 #mainPart {
@@ -304,10 +329,8 @@ nav p:active {
   overflow: auto;
   width: 88%;
   height: 100vh;
-  padding-bottom: 30px;
+  padding-top: 10px;
   position: relative;
-  background: rgb(212, 225, 228);
-  padding-bottom: 50px;
 }
 .test {
   display: flex;
@@ -316,13 +339,14 @@ nav p:active {
   position: relative;
   height: 20vw;
   width: 20vw;
-  background: rgb(229, 235, 202);
+  box-shadow: 0 0 2px gray;
   padding: 0;
   margin: 0;
   margin-left: 1%;
-  margin-bottom: 20px;
+  margin-top: 20px;
   overflow: hidden;
   font-size: 18px;
+  padding-top: 20px;
 }
 img {
   position: relative;

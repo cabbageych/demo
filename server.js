@@ -28,60 +28,90 @@ var server = http.createServer((request, response) => {
                 type: 3,
                 name: "薛定谔的滑稽",
                 price: 999,
-                src: imageUrl,
-                des: "emmmm des for test!",
+                url: imageUrl,
+                description: "emmmm des for test!",
                 totalCount: 99,
-                sellerName: "cabbage"
+                shopName: "cabbage"
             },
             {
                 id: 222,
                 type: 4,
                 name: "薛定谔的滑稽02",
                 price: 999,
-                src: imageUrl,
-                des: "emmmm des for test!",
+                url: imageUrl,
+                description: "emmmm des for test!",
                 totalCount: 99,
-                sellerName: "cabbage"
+                shopName: "cabbage"
             },
             {
                 id: 333,
                 type: 1,
                 name: "薛定谔的滑稽03",
                 price: 999,
-                src: imageUrl,
-                des: "emmmm des for test!",
+                url: imageUrl,
+                description: "emmmm des for test!",
                 totalCount: 99,
-                sellerName: "cabbage"
+                shopName: "cabbage"
             },
             {
                 id: 444,
                 type: 1,
                 name: "薛定谔的滑稽04",
                 price: 999,
-                src: imageUrl,
-                des: "emmmm des for test!",
+                url: imageUrl,
+                description: "emmmm des for test!",
                 totalCount: 99,
-                sellerName: "cabbage"
+                shopName: "cabbage"
             },
             {
                 id: 555,
                 type: 1,
                 name: "薛定谔的滑稽05",
                 price: 999,
-                src: imageUrl,
-                des: "emmmm des for test!",
+                url: imageUrl,
+                description: "emmmm des for test!",
                 totalCount: 99,
-                sellerName: "cabbage"
+                shopName: "cabbage"
             },
             {
                 id: 666,
                 type: 6,
                 name: "薛定谔的滑稽06",
                 price: 999,
-                src: imageUrl,
-                des: "emmmm des for test!",
+                url: imageUrl,
+                description: "emmmm des for test!",
                 totalCount: 99,
-                sellerName: "cabbage"
+                shopName: "cabbage"
+            },
+            {
+                id: 777,
+                type: 1,
+                name: "薛定谔的滑稽04",
+                price: 999,
+                url: imageUrl,
+                description: "emmmm des for test!",
+                totalCount: 99,
+                shopName: "cabbage"
+            },
+            {
+                id: 888,
+                type: 1,
+                name: "薛定谔的滑稽05",
+                price: 999,
+                url: imageUrl,
+                description: "emmmm des for test!",
+                totalCount: 99,
+                shopName: "cabbage"
+            },
+            {
+                id: 999,
+                type: 6,
+                name: "薛定谔的滑稽06",
+                price: 999,
+                url: imageUrl,
+                description: "emmmm des for test!",
+                totalCount: 99,
+                shopName: "cabbage"
             }
         ];
         response.write(JSON.stringify(data));

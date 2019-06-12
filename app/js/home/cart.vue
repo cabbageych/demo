@@ -51,7 +51,7 @@ export default {
   methods: {
     countChange: function(e, item) {
       item.count = e.target.value;
-      console.log(item.count);
+      //console.log(item.count);
     },
     del: function(a) {
       let sure = confirm("是否删除本项目?");
@@ -68,7 +68,7 @@ export default {
           alert("您还没有添加购物车!");
         } else {
           //console.log(this.value);
-          fetch("http://localhost:8080", {
+          fetch("http://localhost:8082", {
             method: "POST",
             headers: {
               "Content-Type": "application/json"

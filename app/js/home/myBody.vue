@@ -192,16 +192,16 @@ export default {
   },
   mounted() {
     //console.log("myBody:");
-    fetch("http://localhost:8080", {
+    fetch("http://localhost:8082", {
       method: "GET"
     })
       .then(response => {
         return response.json();
       })
       .then(val => {
-        for(let i = 0;i<val.length;i++){
+        /*for(let i = 0;i<val.length;i++){
           console.log(val[i]);
-        }
+        }*/
         this.results = val;
         this.resultsTemp = this.results;
         //console.log(this.resultsTemp);

@@ -15,7 +15,7 @@
         <span class="tail">商城</span>
       </div>
       <div id="headerBottom">
-        <a class="a1" href="./login.html">商家入口</a>
+        <a class="a1" @click="toWBPage">返回网站首页</a>
         <button class="a2" @click="toCart()">
           我的购物车&nbsp;&nbsp;
           <strong id="showCartNum">{{childValue}}</strong>
@@ -70,6 +70,9 @@ export default {
       } else if (this.count == 6) {
         this.show06 = !this.show06;
       }
+    },
+    toWBPage:function(){
+      window.location.href = 'http://www.huajiyang.com';
     },
     showAll:function(temp,result){
       temp = result;

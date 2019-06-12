@@ -17,6 +17,6 @@
 
 9.点击图片弹窗显示详细信息
 
-10.demo地址：http://www.huajiyang.com/chenhui/projectShow.html
+10.demo地址：http://www.huajiyang.com/projectShow.html
 
 实现:node+vue

@@ -192,7 +192,7 @@ export default {
   },
   mounted() {
     //console.log("myBody:");
-    fetch("http://localhost:8082", {
+    fetch("http://www.huajiyang.com:8082", {
       method: "GET"
     })
       .then(response => {

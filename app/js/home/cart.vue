@@ -68,7 +68,7 @@ export default {
           alert("您还没有添加购物车!");
         } else {
           //console.log(this.value);
-          fetch("http://localhost:8082", {
+          fetch("http://www.huajiyang.com:8082", {
             method: "POST",
             headers: {
               "Content-Type": "application/json"

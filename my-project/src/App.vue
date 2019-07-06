@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <header>
-      <h1>login with cookie</h1>
+      <h1>Demos</h1>
     </header>
     <router-view/>
   </div>

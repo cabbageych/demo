@@ -10,12 +10,12 @@
             padding: 0;
             height: 100vh;
             width: 100vw;
-            background: black;
+            background: #f1f1f1;
         }
 
         #test {
             position: relative;
-            color: red;
+            color: rgb(228, 144, 144);
         }
     </style>
 </head>
@@ -54,8 +54,8 @@
             points = [];
             pointNum = 100;
             length = 8100; //线段长度的平方
-            ballColor = 'white';
-            ballRadius = 2;
+            ballColor = 'black';
+            ballRadius = 1.5;
             lineWidth = 1;
             temp = {};
             vx = 1.5; //x轴上的前进速度
@@ -131,7 +131,7 @@
                             ctx.beginPath();
                             ctx.moveTo(points[i].x, points[i].y);
                             ctx.lineTo(points[j].x, points[j].y);
-                            ctx.strokeStyle = 'rgba(255, 0, 0,' + (1 - dist / length) + ')';
+                            ctx.strokeStyle = 'rgba(235,100,100,' + (1 - dist / length) + ')';
                             ctx.stroke();
                         }
                     }
@@ -149,7 +149,7 @@
                     if (dist <= length) {
                         ctx.moveTo(mouse.x, mouse.y);
                         ctx.lineTo(points[i].x, points[i].y);
-                        ctx.strokeStyle = 'rgba(255, 0, 0,' + (1 - dist / length) + ')';
+                        ctx.strokeStyle = 'rgba(235,100,100,,' + (1 - dist / length) + ')';
                         ctx.stroke();
                     }
                 }

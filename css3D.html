@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>css3dTest</title>
+        <style>
+            #container{
+                position: relative;
+                height: 200px;
+                width: 200px;
+                margin: 0 auto;
+                transform-style: preserve-3d;  
+                top:200px;
+                animation: move 5s linear infinite alternate;
+            }
+            @keyframes move{
+                from{
+                    transform:  rotateX(-50deg) translateY(100px)  rotateY(0deg) scale(1);
+                    
+                }
+                to{
+                    transform: rotateX(-50deg) translateY(100px) rotateY(360deg) scale(2);
+                    
+                }
+            }
+            #container *{
+                position: absolute;
+                height: 100%;
+                width: 100%;
+                opacity: 0.7;
+            }
+            .front{
+                background: lightblue;
+                transform: translateZ(100px);
+            }
+            .back{
+                background: lightcoral;
+                transform: translateZ(-100px);
+            }
+            .top{
+                background: lightgoldenrodyellow;
+                transform: rotateX(90deg) translateZ(100px);
+            }
+            .down{
+                background: lightgreen;
+                transform: rotateX(90deg) translateZ(-100px);
+            }
+            .left{
+                background: lightseagreen;
+                transform: rotateY(90deg) translateZ(100px);
+            }
+            .right{
+                background: lightpink;
+                transform: rotateY(90deg) translateZ(-100px);
+            }
+        </style>
+    </head>
+    <body>
+        <div id="container">
+            <div class="page front"></div>
+            <div class="page back"></div>
+            <div class="page right"></div>
+            <div class="page left"></div>
+            <div class="page top"></div>
+            <div class="page down"></div>
+        </div>
+    </body>
+</html>

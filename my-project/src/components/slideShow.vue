@@ -21,9 +21,11 @@ import url05 from "../assets/slideShow05.jpg";
 export default {
   data() {
     return {
-      imageAddr: [url01, url02, url03, url04, url05],
-      choose: [0, 1, 2, 3, 4],
-      pic: 0
+      imageAddr: [url01, url02, url03, url04, url01],
+      choose: [0, 1, 2, 3],
+      pic: 0,
+      timeGap: 2000,
+      timer:''
     };
   },
   methods: {
@@ -43,12 +45,26 @@ export default {
       if (this.pic > 4) {
         this.pic = 0;
       }
+      if (this.pic == 0 || this.pic == 5) {
+        this.timeGap = 1000;
+      } else {
+        this.timeGap = 2000;
+      }
       let buttons = document.getElementsByClassName("choose");
       for (let i = 0; i < buttons.length; i++) {
         buttons[i].style.background = "white";
       }
-      buttons[this.pic].style.background = "red";
+      if (this.pic == 4) {
+        buttons[0].style.background = "red";
+      } else {
+        buttons[this.pic].style.background = "red";
+      }
       let content = document.getElementById("content");
+      if (this.pic == 0) {
+        content.style.transition = "0s";
+      } else {
+        content.style.transition = "1s";
+      }
       content.style.transform = "translate(" + -800 * this.pic + "px)";
       ++this.pic;
     }
@@ -56,7 +72,11 @@ export default {
   mounted() {
     let buttons = document.getElementsByClassName("choose");
     buttons[0].style.background = "red";
-    setInterval(this.slideShow, 2500);
+    this.timer = setInterval(this.slideShow, this.timeGap);
+  },
+  destroyed(){
+    clearInterval(this.timer);
+    //console.log('destroyed');
   }
 };
 </script>

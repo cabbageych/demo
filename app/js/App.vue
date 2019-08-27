@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div id="mask">
-      <hr id="centerLine">
+      <hr id="centerLine" />
       <div id="centerCircle"></div>
       <p id="welcome">welcome to cabbage's chatRoom!</p>
     </div>
@@ -9,7 +9,7 @@
       <div id="partLeft">
         <a id="returnToMain" href="http://www.huajiyang.com/chenhui/mainPage.html">点击返回主页</a>
         <div id="contentShow"></div>
-        <hr style="background:black;height:3px;width:100%;">
+        <hr style="background:black;height:3px;width:100%;" />
         <textarea id="contentInput"></textarea>
         <button id="sendMessage" @click="sendMessage">click to send message!</button>
       </div>
@@ -30,15 +30,18 @@ export default {
     return {
       ws: null,
       selfName: "",
-      memberList: []
+      memberList: [],
+      overTime: 8000,
+      lastResponse: ""
     };
   },
   beforeMount() {
     setTimeout(() => {
       document.getElementById("mask").style.display = "none";
-    }, 5000);
+    }, 3000);
   },
   mounted() {
+    let _this = this;
     this.ws = new WebSocket("ws://localhost:8080");
     this.ws.addEventListener("open", function(e) {
       console.log("Connetion to server opended.");
@@ -46,6 +49,10 @@ export default {
     this.ws.addEventListener(
       "message",
       function(e) {
+        _this.lastResponse = new Date();
+        if (e.data == "alive!") {
+          return;
+        }
         let data = JSON.parse(e.data);
         if (data.type == 0) {
           this.selfName = data.name;
@@ -73,6 +80,48 @@ export default {
         }
       }.bind(this)
     );
+    setInterval(() => {
+      _this.ws.send(JSON.stringify({ ping: "1" }));
+      if (new Date() - _this.lastResponse > _this.overTime) {
+        console.log("断线重连...");
+        _this.ws = new WebSocket("ws://localhost:8080");
+
+        _this.ws.addEventListener("open", function(e) {
+          console.log("Connetion to server opended.");
+        });
+        _this.ws.addEventListener("message", function(e) {
+          _this.lastResponse = new Date();
+          if (e.data == "alive!") {
+            return;
+          }
+          let data = JSON.parse(e.data);
+          if (data.type == 0) {
+            _this.selfName = data.name;
+          } else if (data.type == 1) {
+            //console.log(data.memberList);
+            _this.memberList = data.memberList;
+            for (let i = 0; i < _this.memberList.length; i++) {
+              if (_this.selfName == _this.memberList[i]) {
+                _this.memberList[i] = "me";
+              }
+            }
+          } else {
+            let contentShow = document.getElementById("contentShow");
+            let p = document.createElement("p");
+            let strong = document.createElement("strong");
+            if (data.name == _this.selfName) {
+              strong.innerText = "me";
+            } else {
+              strong.innerText = data.name;
+            }
+            p.appendChild(strong);
+            p.append(data.message);
+            contentShow.appendChild(p);
+            //console.log("Client receive a message from server: "+e.data);
+          }
+        });
+      }
+    }, 5000);
   },
   methods: {
     sendMessage: function() {

@@ -52,6 +52,13 @@ var server = ws.createServer(function (conn) {
 	//console.log("New connection");
 	//console.log(clients.length);
 	conn.on("text", function (str) {
+		//test
+		if (str == '{"ping":"1"}') {
+			conn.send('alive!');
+			return ;
+		}
+
+
 		//广播消息
 		clients.forEach(function (wsTemp) {
 			//if(wsTemp !=ws){

@@ -11,6 +11,6 @@
 
 5.可开启多个窗口查看效果
 
-6.demo地址：http://www.huajiyang.com/chenhui/projectShow.html
+6.demo地址：http://www.huajiyang.com/projectShow.html
 
 实现：node+vue

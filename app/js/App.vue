@@ -51,6 +51,7 @@ export default {
       function(e) {
         _this.lastResponse = new Date();
         if (e.data == "alive!") {
+          //console.log(e.data);
           return;
         }
         let data = JSON.parse(e.data);

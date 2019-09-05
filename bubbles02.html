@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>bubbles</title>
+    <style>
+        .wrap {
+            position: absolute;
+            height: 300px;
+            width: 300px;
+            perspective: 1000px;
+            perspective-origin: 50% 50%;
+            animation: move 20s linear infinite alternate;
+        }
+
+        .ball {
+            position: relative;
+            top: 10px;
+            left: 50px;
+            height: 200px;
+            width: 200px;
+            border-radius: 50%;
+            border: 0;
+            padding: 0;
+            margin: 0;
+            background: rgba(154, 203, 250, 0.5);
+            box-shadow: 0 0 2px rgb(151, 150, 150);
+            animation: bubble 2s infinite linear;
+        }
+
+        .ball:before {
+            content: "";
+            position: absolute;
+            top: 2%;
+            left: 2%;
+            width: 90%;
+            height: 90%;
+            border-radius: 100%;
+            background: radial-gradient(circle at top, rgba(255, 255, 255), rgba(0, 0, 0, 0) 60%);
+            transform: rotate(-30deg);
+            z-index: 2;
+        }
+
+
+
+        @keyframes move {
+            from {
+                left: 0;
+            }
+
+            to {
+                left: 90vw;
+            }
+        }
+
+        @keyframes bubble {
+            0% {
+                transform: scale(1);
+            }
+
+            20% {
+                transform: scaleY(0.95) scaleX(1.05);
+            }
+
+            48% {
+                transform: scaleY(1.08) scaleX(0.92);
+            }
+
+            68% {
+                transform: scaleY(0.98) scaleX(1.02);
+            }
+
+            80% {
+                transform: scaleY(1.02) scaleX(0.98);
+            }
+
+            97%,
+            100% {
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    
+    <script>
+        let bubbles = [];
+        for (let i = 0; i < 5; i++) {
+            let div = document.createElement("div");
+            div.className = 'wrap';
+            div.id = 'ball0' + i;
+            let inner = document.createElement("div");
+            inner.className = 'ball';
+            div.append(inner);
+            document.body.appendChild(div);
+            bubbles.push(inner);
+        }
+    </script>
+</body>
+
+</html>

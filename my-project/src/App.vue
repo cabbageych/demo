@@ -5,6 +5,7 @@
       <router-link to='/login'>login</router-link>
       <router-link to='/'>轮播图</router-link>
       <router-link to='/search'>智能提示搜索</router-link>
+      <router-link to='/tab'>tab切换(CSS)</router-link>
     </div>
     <router-view/>
   </div>

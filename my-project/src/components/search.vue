@@ -105,6 +105,9 @@ li button:hover {
   color: white;
   background: rgb(12, 167, 219) !important;
 }
+#sendBtn:focus {
+  outline: none;
+}
 
 #search {
   height: 40px;
@@ -112,6 +115,9 @@ li button:hover {
   font-size: 18px;
   border-radius: 10px;
   border: 1px solid gray;
+}
+#search:focus {
+  outline: none;
 }
 
 #list li {

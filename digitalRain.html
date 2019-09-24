@@ -88,9 +88,6 @@
                     pos[i] += v[i];
                     pos[i] = pos[i] % (clientHeight + digitArr[i].length * 20);
                     for (let j = 0; j < digitArr[i].length; j++) {
-                        ctx.shadowColor = 'green';
-                        ctx.shadowOffsetX = 0.5;
-                        ctx.shadowOffsetY = 0;
                         ctx.fillStyle = 'green';
                         ctx.font = "20px serif";
                         ctx.fillText(digitArr[i][j], i * 28, pos[i] - j * 20);

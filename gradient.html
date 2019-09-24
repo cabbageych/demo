@@ -27,13 +27,13 @@
         let yNums = clientHight / len;
         let num = 0;
         for (let i = 0; i < xNums; i++) {
-                for (let j = 0; j < yNums; j++) {
-                    ctx.fillStyle = 'rgb(' + i*2%255 + ',' + j*2%255 + ',' + (i+j)*2%255 + ')';
-                    ctx.fillRect(i * len, j * len, len, len);
-                }
+            for (let j = 0; j < yNums; j++) {
+                ctx.fillStyle = 'rgb(' + i * 2 % 255 + ',' + j * 2 % 255 + ',' + (i + j) * 2 % 255 + ')';
+                ctx.fillRect(i * len, j * len, len, len);
             }
+        }
         function gradient() {
-            
+
         }
         //setInterval(gradient, 100);
 

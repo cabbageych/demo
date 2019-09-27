@@ -4,6 +4,7 @@ import login from '../components/loginWithCookie.vue'
 import slideShow from '../components/slideShow.vue'
 import search from '../components/search.vue'
 import tab from '../components/tab.vue'
+import shoppingCart from '../components/shoppingCart.vue'
 
 Vue.use(Router)
 
@@ -27,6 +28,10 @@ export default new Router({
     {
       path: '/tab',
       component: tab
+    },
+    {
+      path: '/cart',
+      component: shoppingCart
     }
   ]
 })

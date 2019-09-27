@@ -6,6 +6,7 @@
       <router-link to='/'>轮播图</router-link>
       <router-link to='/search'>智能提示搜索</router-link>
       <router-link to='/tab'>tab切换(CSS)</router-link>
+      <router-link to='/cart'>购物车(vuex)</router-link>
     </div>
     <router-view/>
   </div>

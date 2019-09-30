@@ -3,7 +3,7 @@
     <header>
       <span class="title">cabbage商城</span>
       <button class="cart" @click="mainPageShow=true">商品页</button>
-      <button class="cart" @click="mainPageShow=false">购物车</button>
+      <button class="cart" id="cartShow" @click="mainPageShow=false">购物车</button>
     </header>
     <template v-if="mainPageShow">
       <mainPage></mainPage>
@@ -11,6 +11,9 @@
     <template v-else>
       <list></list>
     </template>
+    <ul>
+      <li v-for="item in tempArr">商品名：{{item.name}}-价格：{{item.price}}-数量：{{item.count}}</li>
+    </ul>
   </div>
 </template>
 <script>
@@ -24,8 +27,17 @@ export default {
   },
   data() {
     return {
-      mainPageShow: true
+      mainPageShow: true,
+      tempArr: [
+        { name: "cabbage01", price: "$999", count: 10 },
+        { name: "cabbage02", price: "$999", count: 11 },
+        { name: "cabbage03", price: "$999", count: 12 }
+      ]
     };
+  },
+  mounted() {
+    let showCart = document.getElementById("cartShow");
+    showCart.addEventListener("mouseenter", () => {});
   }
 };
 </script>

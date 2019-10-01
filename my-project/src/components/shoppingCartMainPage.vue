@@ -1,7 +1,7 @@
 <template>
   <div id="contentBody">
     <div v-for="item in goods" class="template">
-      <img :src="picUrl" />
+      <div><img :src="picUrl" /></div>
       <p>商品：{{item.name}}&nbsp;&nbsp;&nbsp;&nbsp;价格：{{item.price}}</p>
       <button class="addToCart">添加购物车</button>
     </div>
@@ -35,11 +35,14 @@ export default {
   justify-content: center;
 }
 .template {
+  display: flex;
+  flex-direction: column;
+  position: relative;
   width: 250px;
   margin: 10px;
-  text-align: center;
   padding: 10px;
   box-shadow: 0 0 3px gray;
+  align-items: center;
 }
 img {
   height: 150px;

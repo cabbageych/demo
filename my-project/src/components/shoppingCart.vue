@@ -11,8 +11,11 @@
     <template v-else>
       <list></list>
     </template>
-    <ul>
-      <li v-for="item in tempArr">商品名：{{item.name}}-价格：{{item.price}}-数量：{{item.count}}</li>
+    <ul class="cartShow" id="cartInfo">
+      <li v-for="item in tempArr">
+        商品：{{item.name}}&nbsp;
+        <span style="color:red;">单价：{{item.price}}</span>
+      </li>
     </ul>
   </div>
 </template>
@@ -37,7 +40,22 @@ export default {
   },
   mounted() {
     let showCart = document.getElementById("cartShow");
-    showCart.addEventListener("mouseenter", () => {});
+    let cartInfo = document.getElementById("cartInfo");
+    showCart.addEventListener("mouseenter", e => {
+      let x = e.pageX;
+      let y = e.pageY;
+      document.body.appendChild(cartInfo);
+      cartInfo.style.position = "fixed";
+      cartInfo.style.left = x + "px";
+      cartInfo.style.top = y + "px";
+      cartInfo.style.display = "block";
+    });
+    showCart.addEventListener("click", () => {
+      //
+    });
+    showCart.addEventListener("mouseleave", () => {
+      cartInfo.style.display = "none";
+    });
   }
 };
 </script>
@@ -72,5 +90,19 @@ header {
 }
 .cart:focus {
   outline: none;
+}
+#cartInfo {
+  position: absolute;
+  display: block;
+  margin: 0;
+  border: 0;
+  padding: 0;
+}
+.cartShow {
+  list-style: none;
+  padding: 10px;
+}
+li {
+  text-decoration: underline;
 }
 </style>

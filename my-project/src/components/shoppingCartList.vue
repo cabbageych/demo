@@ -6,13 +6,13 @@
         <td>价格</td>
         <td>数量</td>
       </tr>
-      <tr v-for="item in testArr">
+      <tr v-for="item in list">
         <td>{{item.name}}</td>
         <td>{{item.price}}</td>
         <td>
-          <button>+</button>
-          <input type="text" class="numInput" />
-          <button>-</button>
+          <button @click="addNum(item.name)">+</button>
+          <input type="text" class="numInput" v-model="item.count" />
+          <button @click="minusNum(item.name)">-</button>
         </td>
       </tr>
     </table>
@@ -24,11 +24,23 @@
 export default {
   data() {
     return {
-      testArr: [
-        { name: "cabbage1", price: "$999", count: 1 },
-        { name: "cabbage2", price: "$999", count: 1 }
-      ]
+      list: []
     };
+  },
+  mounted() {
+    this.list = this.$store.getters.getList;
+  },
+  methods: {
+    submit: function() {
+      this.$store.dispatch("clear");
+      this.list = [];
+    },
+    addNum: function(name) {
+      this.$store.dispatch("addNums", name);
+    },
+    minusNum: function(name) {
+      this.$store.dispatch("minusNums", name);
+    }
   }
 };
 </script>
@@ -72,10 +84,10 @@ button {
 button:hover {
   background: rgb(153, 240, 221);
 }
-.numInput{
+.numInput {
   border-radius: 3px;
   width: 40px;
-  border:1px solid gray;
+  border: 1px solid gray;
   font-size: 14px;
 }
 </style>

@@ -4,7 +4,7 @@
       <div>
         <img :src="picUrl" />
       </div>
-      <p>商品：{{item.name}}&nbsp;&nbsp;&nbsp;&nbsp;价格：{{item.price}}</p>
+      <p>商品：{{item.name}}&nbsp;&nbsp;&nbsp;&nbsp;价格：${{item.price}}</p>
       <button class="addToCart" @click="addToCart($event,item)">添加购物车</button>
     </div>
   </div>
@@ -16,12 +16,12 @@ export default {
   data() {
     return {
       goods: [
-        { name: "01", price: "$999" },
-        { name: "02", price: "$999" },
-        { name: "03", price: "$999" },
-        { name: "04", price: "$999" },
-        { name: "05", price: "$999" },
-        { name: "06", price: "$999" }
+        { name: "01", price: "999" },
+        { name: "02", price: "999" },
+        { name: "03", price: "999" },
+        { name: "04", price: "999" },
+        { name: "05", price: "999" },
+        { name: "06", price: "999" }
       ],
       picUrl: huaji
     };
@@ -38,7 +38,11 @@ export default {
       tip.style.color = "green";
       tip.id = "addTip";
       document.body.append(tip);
-      this.$store.dispatch("addToCart", item.name, item.price, 1);
+      this.$store.dispatch("addToCart", {
+        na: item.name,
+        pr: item.price,
+        co: 1
+      });
       setTimeout(() => {
         let tip = document.getElementById("addTip");
         document.body.removeChild(tip);

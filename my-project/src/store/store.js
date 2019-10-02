@@ -24,22 +24,22 @@ const store = new Vuex.Store({
         }
     },
     mutations: {
-        addToCart: function (state, na, pr, co) {
+        addToCart: function (state, obj) {
             let arr = state.list;
             let flag = true;
             for (let i = 0; i < arr.length; i++) {
-                if (arr[i].name == na) {
-                    arr[i].count += co;
+                if (arr[i].name == obj.na) {
+                    arr[i].count += obj.co;
                     flag = false;
                 }
             }
             if (flag) {
-                let obj = {
-                    name: na,
-                    price: pr,
-                    count: co
+                let tempObj = {
+                    name: obj.na,
+                    price: obj.pr,
+                    count: obj.co
                 }
-                state.list.push(obj);
+                state.list.push(tempObj);
             }
         },
         rmFromCart: function (state, name) {
@@ -59,7 +59,7 @@ const store = new Vuex.Store({
                 }
             }
         },
-        delNums: function (state, name) {
+        minusNums: function (state, name) {
             let arr = state.list;
             for (let i = 0; i < arr.length; i++) {
                 if (arr[i].name == name) {
@@ -81,8 +81,8 @@ const store = new Vuex.Store({
         addNums: function ({ commit }, name) {
             commit('addNums', name);
         },
-        delNums: function ({ commit }, name) {
-            commit('delNums', name);
+        minusNums: function ({ commit }, name) {
+            commit('minusNums', name);
         },
         clear: function ({ commit }) {
             commit('clear');

@@ -27,12 +27,7 @@ export default {
   },
   data() {
     return {
-      mainPageShow: true,
-      tempArr: [
-        { name: "cabbage01", price: "$999", count: 10 },
-        { name: "cabbage02", price: "$999", count: 11 },
-        { name: "cabbage03", price: "$999", count: 12 }
-      ]
+      mainPageShow: true
     };
   },
   computed: {

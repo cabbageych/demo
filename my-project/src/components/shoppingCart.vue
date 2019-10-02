@@ -3,7 +3,10 @@
     <header>
       <span class="title">cabbage商城</span>
       <button class="cart" @click="mainPageShow=true">商品页</button>
-      <button class="cart" id="cartShow" @click="mainPageShow=false">购物车</button>
+      <button class="cart" id="cartShow" @click="mainPageShow=false">
+        购物车
+        <span style="color:blue;">{{listLen}}</span>
+      </button>
     </header>
     <template v-if="mainPageShow">
       <mainPage></mainPage>
@@ -11,12 +14,6 @@
     <template v-else>
       <list></list>
     </template>
-    <ul class="cartShow" id="cartInfo">
-      <li v-for="item in tempArr">
-        商品：{{item.name}}&nbsp;
-        <span style="color:red;">单价：{{item.price}}</span>
-      </li>
-    </ul>
   </div>
 </template>
 <script>
@@ -38,25 +35,12 @@ export default {
       ]
     };
   },
-  mounted() {
-    let showCart = document.getElementById("cartShow");
-    let cartInfo = document.getElementById("cartInfo");
-    showCart.addEventListener("mouseenter", e => {
-      let x = e.pageX;
-      let y = e.pageY;
-      document.body.appendChild(cartInfo);
-      cartInfo.style.position = "fixed";
-      cartInfo.style.left = x + "px";
-      cartInfo.style.top = y + "px";
-      cartInfo.style.display = "block";
-    });
-    showCart.addEventListener("click", () => {
-      //
-    });
-    showCart.addEventListener("mouseleave", () => {
-      cartInfo.style.display = "none";
-    });
-  }
+  computed: {
+    listLen: function() {
+      return this.$store.getters.getListLen;
+    }
+  },
+  mounted() {}
 };
 </script>
 

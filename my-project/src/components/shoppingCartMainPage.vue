@@ -1,9 +1,11 @@
 <template>
   <div id="contentBody">
     <div v-for="item in goods" class="template">
-      <div><img :src="picUrl" /></div>
+      <div>
+        <img :src="picUrl" />
+      </div>
       <p>商品：{{item.name}}&nbsp;&nbsp;&nbsp;&nbsp;价格：{{item.price}}</p>
-      <button class="addToCart">添加购物车</button>
+      <button class="addToCart" @click="addToCart($event,item)">添加购物车</button>
     </div>
   </div>
 </template>
@@ -23,6 +25,25 @@ export default {
       ],
       picUrl: huaji
     };
+  },
+  methods: {
+    addToCart: function(e, item) {
+      let x = e.pageX;
+      let y = e.pageY;
+      let tip = document.createElement("p");
+      tip.innerHTML = "添加购物车成功!";
+      tip.style.position = "absolute";
+      tip.style.left = x + "px";
+      tip.style.top = y + "px";
+      tip.style.color = "green";
+      tip.id = "addTip";
+      document.body.append(tip);
+      this.$store.dispatch("addToCart", item.name, item.price, 1);
+      setTimeout(() => {
+        let tip = document.getElementById("addTip");
+        document.body.removeChild(tip);
+      }, 800);
+    }
   }
 };
 </script>

@@ -8,6 +8,9 @@ const store = new Vuex.Store({
         list: []
     },
     getters: {
+        getListLen: function (state) {
+            return state.list.length;
+        },
         getList: function (state) {
             return state.list;
         },
@@ -21,13 +24,23 @@ const store = new Vuex.Store({
         }
     },
     mutations: {
-        addToCart: function (state, name, price, count) {
-            let obj = {
-                name: name,
-                price: price,
-                count: count
+        addToCart: function (state, na, pr, co) {
+            let arr = state.list;
+            let flag = true;
+            for (let i = 0; i < arr.length; i++) {
+                if (arr[i].name == na) {
+                    arr[i].count += co;
+                    flag = false;
+                }
             }
-            state.list.push(obj);
+            if (flag) {
+                let obj = {
+                    name: na,
+                    price: pr,
+                    count: co
+                }
+                state.list.push(obj);
+            }
         },
         rmFromCart: function (state, name) {
             let arr = state.list;
@@ -75,4 +88,6 @@ const store = new Vuex.Store({
             commit('clear');
         }
     }
-})
+});
+
+export default store;

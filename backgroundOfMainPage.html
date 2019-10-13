@@ -24,7 +24,6 @@
         #left {
             width: 40%;
             height: 100%;
-
         }
 
         #right {
@@ -186,7 +185,6 @@
             border-right: 8px solid yellow;
         }
 
-
         .c1 {
             top: 0vh;
             margin-top: 2.5vh;
@@ -269,20 +267,20 @@
 
         #des {
             position: relative;
-            height:100%;
-            width:30vh;
+            height: 100%;
+            width: 30vh;
             top: -100vh;
             left: 70vh;
             margin: 0;
             padding: 0;
             text-align: center;
             font-size: 50px;
-            color:rgb(240, 235, 172);
+            color: rgb(240, 235, 172);
         }
 
-        #desChild{
-            position:relative;
-            top:45vh;
+        #desChild {
+            position: relative;
+            top: 45vh;
             transform: translateY(-50%);
         }
 
@@ -330,7 +328,7 @@
             <div class="circle c3"></div>
             <div class="circle c4"></div>
             <div class="circle c5"></div>
-            <div  id="des">
+            <div id="des">
                 <p id="desChild">designer<br>
                     &<br>
                     developer</p>
@@ -345,14 +343,12 @@
         //获取屏幕宽高
         let clientHeight = document.body.clientHeight;
         let clientWidth = document.body.clientWidth;
-
         //使用canvas画线条
         let canvas = document.getElementById('mycanvas');
         canvas.style.background = 'radial-gradient(circle farthest-side at 25% 65%, rgba(17, 16, 16, 0.63), rgb(10, 15, 58))';
         canvas.height = clientHeight;
         canvas.width = clientWidth;
         let ctx = canvas.getContext('2d');
-
         //获取‘焦点’以及各圆信息
         let circles = document.getElementsByClassName('circle');
         let focus = document.getElementById('focus');
@@ -361,7 +357,6 @@
         focusH = focusH.substr(0, focusH.length - 2);
         focusW = focusW.substr(0, focusW.length - 2);
         let focusPos = { x: focus.offsetLeft + (focusW / 2), y: focus.offsetTop + (focusH / 2) };
-
         let circlesPos = [];
         let height = window.getComputedStyle(circles[0])['height'];
         let width = window.getComputedStyle(circles[0])['width'];
@@ -373,7 +368,6 @@
             temp.y = circles[i].offsetTop + (height / 2);
             circlesPos.push(temp);
         }
-
         //等待更新
         function drawLine(circlePos) {
             let center01 = {};
@@ -391,12 +385,10 @@
             ctx.lineTo(center02.x, center02.y);
             ctx.lineTo(center03.x, center03.y);
             ctx.lineTo(circlePos.x, circlePos.y);
-
             ctx.strokeStyle = 'yellow';
             ctx.lineWidth = focusH / 3;
             ctx.stroke();
         }
-
         for (let i = 0; i < circles.length; i++) {
             circles[i].addEventListener('mouseenter', (e) => {
                 //console.log(e);
@@ -405,7 +397,6 @@
                     focus.style.boxShadow = '0 0 50px yellow';
                     //drawLine(circlesPos[i]);
                 }
-
             });
             circles[i].addEventListener('mouseleave', (e) => {
                 //console.log(e);

@@ -27,6 +27,7 @@
         }
 
         #right {
+            position: relative;
             width: 60%;
             height: 100%;
         }
@@ -142,7 +143,7 @@
         }
 
         .circle {
-            position: relative;
+            position: absolute;
             height: 20vh;
             width: 20vh;
             border-left: 5px solid yellow;
@@ -186,8 +187,8 @@
         }
 
         .c1 {
-            top: 0vh;
-            margin-top: 2.5vh;
+            top: 5vh;
+            margin-top: 0vh;
             left: 0vw;
             margin-left: 0px;
             border-left: 5px solid black;
@@ -202,8 +203,8 @@
         }
 
         .c2 {
-            top: -10vh;
-            margin-top: 0px;
+            top: 17.5vh;
+            margin-top: 0vh;
             left: 45vh;
             margin-left: 0px;
             border-left: 5px solid rgb(43, 230, 43);
@@ -218,7 +219,7 @@
         }
 
         .c3 {
-            top: 0vh;
+            top: 42.5vh;
             margin-top: 0px;
             left: 20vh;
             margin-left: 0px;
@@ -234,8 +235,8 @@
         }
 
         .c4 {
-            top: 7.5vh;
-            margin-top: 0px;
+            top: 67.5vh;
+            margin-top: 0vh;
             left: 45vh;
             margin-left: 0px;
             border-left: 5px solid rgb(230, 35, 181);
@@ -250,8 +251,8 @@
         }
 
         .c5 {
-            top: 0vh;
-            margin-top: -5vh;
+            top: 75vh;
+            margin-top: 0vh;
             left: 0vw;
             margin-left: 0px;
             border-left: 5px solid rgb(22, 231, 162);
@@ -266,10 +267,10 @@
         }
 
         #des {
-            position: relative;
-            height: 100%;
+            position: absolute;
+            height: 100vh;
             width: 30vh;
-            top: -100vh;
+
             left: 70vh;
             margin: 0;
             padding: 0;
@@ -336,6 +337,44 @@
         </div>
     </div>
     <script>
+        //下落动画
+        window.onload = function () {
+            let circles = document.getElementsByClassName('circle');
+            let c1 = circles[0], c2 = circles[1], c3 = circles[2], c4 = circles[3], c5 = circles[4];
+            for (let i = 0; i < circles.length; i++) {
+                circles[i].style.top = '-20vh';
+            }
+            let top = -20;
+            let end = [5, 17.5, 42.5, 67.5, 75];
+            let gap = [];
+            for (let i = 0; i < end.length; i++) {
+                gap[i] = (end[i] + 20) / 80;
+            }
+            let current = top;
+            requestAnimationFrame(fall.bind(this, 0));
+            function fall(num) {
+                if (current >= end[num]) {
+                    current = top;
+                    if (num >= 5) {
+                        return;
+                    } else {
+                        requestAnimationFrame(fall.bind(this, num + 1));
+                    }
+                } else {
+                    switch (num) {
+                        case 0: c1.style.top = current + 'vh'; console.log('test'); break;
+                        case 1: c2.style.top = current + 'vh'; break;
+                        case 2: c3.style.top = current + 'vh'; break;
+                        case 3: c4.style.top = current + 'vh'; break;
+                        case 4: c5.style.top = current + 'vh'; break;
+                    }
+                    current += gap[num];
+                    requestAnimationFrame(fall.bind(this, num));
+                }
+            }
+        }
+
+
         //监听窗口大小改变
         window.onresize = function () {
             location.reload();

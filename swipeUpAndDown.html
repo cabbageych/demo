@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>test</title>
+    <meta charset="utf-8">
+    <style>
+        html,body{
+            margin:0;
+            padding:0;
+            background-color: lightblue;
+        }
+    </style>
+</head>
+
+<body>
+
+    <canvas id="myCanvas"></canvas>
+    <canvas id="myCanvas02"></canvas>
+    <script>
+        function float() {
+            let el = document.getElementById('myCanvas');
+            let marginTop = 0;
+            let direction = 'down';
+            function animate() {
+                let speed = 0.2;
+                if (direction === 'down') {
+                    marginTop += speed;
+                } else if (direction === 'up') {
+                    marginTop -= speed;
+                }
+                if (marginTop >= 15) {
+                    direction = 'up';
+                }
+                if (marginTop <= 0) {
+                    direction = 'down';
+                }
+                el.style.marginTop = marginTop + 'px';
+                requestAnimationFrame(animate);
+            }
+            requestAnimationFrame(animate);
+        }
+        float();
+        //console.log(direction)
+
+        function draw(ctx, xStart, xEnd, xMid, yStart, yEnd) {
+            ctx.beginPath();
+            ctx.moveTo(xStart, yStart);
+            ctx.lineTo(xMid, yEnd);
+            ctx.lineWidth = 6;
+            ctx.lineCap = 'round';
+            ctx.stroke();
+            ctx.lineTo(xEnd, yStart);
+            ctx.stroke();
+        }
+        function drawLine(id, direction) {
+            let canvas = document.getElementById(id);
+            canvas.height = 60;
+            canvas.width = 70;
+            //canvas.style.border = '1px solid red';
+            let fontSize = 14;
+
+            let ctx = canvas.getContext('2d');
+            ctx.font = fontSize + 'px sans-serif';
+            ctx.fillStyle = 'white';
+            ctx.strokeStyle = 'white';
+
+            let xStart = 5, xEnd = 65, xMid = Math.ceil((xStart + xEnd) / 2), xGap = 15;
+            let yStartGap = 9, yEndGap = yStartGap + 6;
+            if (direction === 'down') {
+                let yStart = 40, yEnd = 55;
+                for (let i = 0; i < 2; i++ , xStart += xGap, xEnd -= xGap, yStart -= yStartGap, yEnd -= yEndGap) {
+                    draw(ctx, xStart, xEnd, xMid, yStart, yEnd);
+                }
+                ctx.fillText('向下滑动', xMid - 2 * fontSize, yStart - 7);
+            } else if (direction === 'up') {
+                let yStart = 20, yEnd = 5;
+                for (let i = 0; i < 2; i++ , xStart += xGap, xEnd -= xGap, yStart += yStartGap, yEnd += yEndGap) {
+                    draw(ctx, xStart, xEnd, xMid, yStart, yEnd);
+                }
+                ctx.fillText('向上滑动', xMid - 2 * fontSize, yStart + fontSize / 2 + 10);
+            }
+        }
+        drawLine('myCanvas', 'down');
+        drawLine('myCanvas02', 'up');
+    </script>
+</body>
+
+</html>

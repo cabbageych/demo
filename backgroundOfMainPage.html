@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+    <meta charset="utf-8">
+    <title>mainPage</title>
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+            /*background: radial-gradient(rgb(218, 217, 203), rgb(17, 17, 77));*/
+            background: radial-gradient(circle farthest-side at 25% 65%, rgba(17, 16, 16, 0.63), rgb(10, 15, 58));
+            overflow-y: hidden;
+        }
+
+        #wrap {
+            display: flex;
+            height: 100vh;
+            width: 100vw;
+            flex-direction: row;
+        }
+
+        #left {
+            width: 40%;
+            height: 100%;
+        }
+
+        #right {
+            position: relative;
+            width: 60%;
+            height: 100%;
+        }
+
+        .magicCube {
+            position: relative;
+            left: 30vw;
+            margin-left: -250px;
+            top: 50vh;
+            margin-top: -170px;
+            width: 200px;
+            height: 200px;
+            transform-style: preserve-3d;
+            animation: rotate 10s linear infinite;
+        }
+
+        .magicCube * {
+            background-image: url('huaji.jpg');
+            background-size: cover;
+            background-color: rgba(0, 0, 0, 0.5);
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 1px solid rgb(168, 165, 223);
+            box-shadow: 0 0 10px yellow;
+        }
+
+        .font {
+            transform: translateZ(100px);
+        }
+
+        .back {
+            transform: rotateX(180deg) translateZ(100px);
+        }
+
+        .left {
+            transform: rotateY(-90deg) translateZ(100px);
+        }
+
+        .right {
+            transform: rotateY(90deg) translateZ(100px);
+        }
+
+        .top {
+            transform: rotateX(90deg) translateZ(100px);
+        }
+
+        .bottom {
+            transform: rotateX(-90deg) translateZ(100px);
+        }
+
+        @keyframes rotate {
+            from {
+                transform: translateY(-10px) rotateX(0) rotateZ(0);
+            }
+
+            to {
+                transform: translateY(-10px) rotateX(360deg) rotateZ(360deg);
+            }
+        }
+
+        #bottom {
+            position: absolute;
+            top: 50vh;
+            margin-top: 100px;
+            left: 30vw;
+            margin-left: -250px;
+            height: 100px;
+            width: 200px;
+            border-radius: 50%;
+            border: none;
+            box-shadow: 0 0 20px 0px yellow;
+            background: radial-gradient(white, yellow);
+            transform-style: preserve-3d;
+            transform: rotateX(60deg);
+            animation: light 4s linear infinite alternate;
+        }
+
+        @keyframes light {
+            from {
+                box-shadow: 0 0 20px 0px yellow;
+            }
+
+            to {
+                box-shadow: 0 0 150px 50px yellow;
+            }
+        }
+
+        #focus {
+            position: absolute;
+            height: 7.5vh;
+            width: 7.5vh;
+            top: 50vh;
+            margin-top: -20px;
+            left: 30vw;
+            margin-left: 60px;
+            border-radius: 50%;
+            background: radial-gradient(white, gray);
+            box-shadow: 0 0 20px gray;
+            transition: 1s;
+        }
+
+        #linear {
+            position: absolute;
+            top: 5vh;
+            height: 90vh;
+            width: 180vh;
+            border-radius: 50%;
+            left: 30vw;
+            margin-left: -90vh;
+            border: 2px solid yellow;
+            z-index: -1;
+        }
+
+        .circle {
+            position: absolute;
+            height: 20vh;
+            width: 20vh;
+            border-left: 5px solid yellow;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 15vh;
+            font-size: 22px;
+            overflow: hidden;
+            animation: circleRotate 6s linear infinite;
+        }
+
+        .circle::before {
+            position: absolute;
+            content: '';
+            height: 18vh;
+            width: 18vh;
+            border-right: 5px solid red;
+            border-radius: 50%;
+            top: 1vh;
+            left: 1vh;
+            animation: circleRotate 6s linear infinite;
+        }
+
+        .circle:after {
+            position: absolute;
+            background: radial-gradient(white, yellow);
+            height: 15vh;
+            width: 15vh;
+            top: 2.5vh;
+            left: 2.5vh;
+            border-radius: 50%;
+            animation: stay 6s linear infinite;
+        }
+
+        .circle:hover {
+            border-left: 10px solid red;
+        }
+
+        .circle:hover:before {
+            border-right: 8px solid yellow;
+        }
+
+        .c1 {
+            top: 5vh;
+            margin-top: 0vh;
+            left: 0vw;
+            margin-left: 0px;
+            border-left: 5px solid black;
+        }
+
+        .c1::before {
+            border-right: 5px solid white;
+        }
+
+        .c1:after {
+            content: '个人信息';
+        }
+
+        .c2 {
+            top: 17.5vh;
+            margin-top: 0vh;
+            left: 45vh;
+            margin-left: 0px;
+            border-left: 5px solid rgb(43, 230, 43);
+        }
+
+        .c2::before {
+            border-right: 5px solid rgb(30, 107, 223);
+        }
+
+        .c2:after {
+            content: '留言板';
+        }
+
+        .c3 {
+            top: 42.5vh;
+            margin-top: 0px;
+            left: 20vh;
+            margin-left: 0px;
+            border-left: 5px solid rgb(223, 142, 20);
+        }
+
+        .c3::before {
+            border-right: 5px solid rgb(197, 32, 148);
+        }
+
+        .c3:after {
+            content: '项目展示';
+        }
+
+        .c4 {
+            top: 67.5vh;
+            margin-top: 0vh;
+            left: 45vh;
+            margin-left: 0px;
+            border-left: 5px solid rgb(230, 35, 181);
+        }
+
+        .c4::before {
+            border-right: 5px solid rgb(30, 216, 230);
+        }
+
+        .c4:after {
+            content: '...';
+        }
+
+        .c5 {
+            top: 75vh;
+            margin-top: 0vh;
+            left: 0vw;
+            margin-left: 0px;
+            border-left: 5px solid rgb(22, 231, 162);
+        }
+
+        .c5::before {
+            border-right: 5px solid rgb(154, 21, 231);
+        }
+
+        .c5:after {
+            content: '问题解决';
+        }
+
+        #des {
+            position: absolute;
+            height: 100vh;
+            width: 30vh;
+
+            left: 70vh;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            font-size: 50px;
+            color: rgb(240, 235, 172);
+        }
+
+        #desChild {
+            position: relative;
+            top: 45vh;
+            transform: translateY(-50%);
+        }
+
+        @keyframes circleRotate {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes stay {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(-360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="mycanvas" style="z-index:-1; position:absolute;"></canvas>
+    <div id="wrap">
+        <div id="left">
+            <div class="magicCube">
+                <div class="font"></div>
+                <div class="back"></div>
+                <div class="left"></div>
+                <div class="right"></div>
+                <div class="top"></div>
+                <div class="bottom"></div>
+            </div>
+            <div id="bottom"></div>
+            <div id="focus"></div>
+        </div>
+        <div id="right">
+
+            <div class="circle c1"></div>
+            <div class="circle c2"></div>
+            <div class="circle c3"></div>
+            <div class="circle c4"></div>
+            <div class="circle c5"></div>
+            <div id="des">
+                <p id="desChild">designer<br>
+                    &<br>
+                    developer</p>
+            </div>
+        </div>
+    </div>
+    <script>
+        //下落动画
+        window.onload = function () {
+            let circles = document.getElementsByClassName('circle');
+            let c1 = circles[0], c2 = circles[1], c3 = circles[2], c4 = circles[3], c5 = circles[4];
+            for (let i = 0; i < circles.length; i++) {
+                circles[i].style.top = '-20vh';
+            }
+            let top = -20;
+            let end = [5, 17.5, 42.5, 67.5, 75];
+            let gap = [];
+            for (let i = 0; i < end.length; i++) {
+                gap[i] = (end[i] + 20) / 80;
+            }
+            let current = top;
+            requestAnimationFrame(fall.bind(this, 0));
+            function fall(num) {
+                if (current >= end[num]) {
+                    current = top;
+                    if (num >= 5) {
+                        return;
+                    } else {
+                        requestAnimationFrame(fall.bind(this, num + 1));
+                    }
+                } else {
+                    switch (num) {
+                        case 0: c1.style.top = current + 'vh'; console.log('test'); break;
+                        case 1: c2.style.top = current + 'vh'; break;
+                        case 2: c3.style.top = current + 'vh'; break;
+                        case 3: c4.style.top = current + 'vh'; break;
+                        case 4: c5.style.top = current + 'vh'; break;
+                    }
+                    current += gap[num];
+                    requestAnimationFrame(fall.bind(this, num));
+                }
+            }
+        }
+
+
+        //监听窗口大小改变
+        window.onresize = function () {
+            location.reload();
+        }
+        //获取屏幕宽高
+        let clientHeight = document.body.clientHeight;
+        let clientWidth = document.body.clientWidth;
+        //使用canvas画线条
+        let canvas = document.getElementById('mycanvas');
+        canvas.style.background = 'radial-gradient(circle farthest-side at 25% 65%, rgba(17, 16, 16, 0.63), rgb(10, 15, 58))';
+        canvas.height = clientHeight;
+        canvas.width = clientWidth;
+        let ctx = canvas.getContext('2d');
+        //获取‘焦点’以及各圆信息
+        let circles = document.getElementsByClassName('circle');
+        let focus = document.getElementById('focus');
+        let focusH = window.getComputedStyle(focus)['height'];
+        let focusW = window.getComputedStyle(focus)['width'];
+        focusH = focusH.substr(0, focusH.length - 2);
+        focusW = focusW.substr(0, focusW.length - 2);
+        let focusPos = { x: focus.offsetLeft + (focusW / 2), y: focus.offsetTop + (focusH / 2) };
+        let circlesPos = [];
+        let height = window.getComputedStyle(circles[0])['height'];
+        let width = window.getComputedStyle(circles[0])['width'];
+        height = height.substr(0, height.length - 2);
+        width = width.substr(0, width.length - 2);
+        for (let i = 0; i < circles.length; i++) {
+            let temp = {};
+            temp.x = circles[i].offsetLeft + (width / 2);
+            temp.y = circles[i].offsetTop + (height / 2);
+            circlesPos.push(temp);
+        }
+        //等待更新
+        function drawLine(circlePos) {
+            let center01 = {};
+            let center02 = {};
+            let center03 = {};
+            center02.x = (focusPos.x + circlePos.x) / 2;
+            center02.y = (focusPos.y + circlePos.y) / 2;
+            center01.x = (focusPos.x + center02.x) / 2;
+            center01.y = (focusPos.y + center02.y) / 2;
+            center03.x = (circlePos.x + center02.x) / 2;
+            center03.y = (circlePos.y + center02.y) / 2;
+            ctx.beginPath();
+            ctx.moveTo(focusPos.x, focusPos.y);
+            ctx.lineTo(center01.x, center01.y);
+            ctx.lineTo(center02.x, center02.y);
+            ctx.lineTo(center03.x, center03.y);
+            ctx.lineTo(circlePos.x, circlePos.y);
+            ctx.strokeStyle = 'yellow';
+            ctx.lineWidth = focusH / 3;
+            ctx.stroke();
+        }
+        for (let i = 0; i < circles.length; i++) {
+            circles[i].addEventListener('mouseenter', (e) => {
+                //console.log(e);
+                if (e.target.tagName == 'DIV') {
+                    focus.style.background = 'radial-gradient(white,yellow)';
+                    focus.style.boxShadow = '0 0 50px yellow';
+                    //drawLine(circlesPos[i]);
+                }
+            });
+            circles[i].addEventListener('mouseleave', (e) => {
+                //console.log(e);
+                if (e.target.tagName == 'DIV') {
+                    focus.style.background = 'radial-gradient(white, gray)';
+                    focus.style.boxShadow = 'none';
+                    ctx.clearRect(0, 0, clientWidth, clientHeight);
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

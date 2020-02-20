@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>figures</title>
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: radial-gradient(circle farthest-side at 20% 80%, rgb(236, 235, 235), rgb(112, 236, 230));
+        }
+    </style>
+</head>
+
+<body>
+    <svg height="0" width="0" id="bg">
+        <defs>
+            <radialGradient id="radialGradient">
+                <stop offset="0%" stop-color="rgb(112, 236, 230)"></stop>
+                <stop offset="100%" stop-color="white"></stop>
+            </radialGradient>
+            <filter id="filter">
+                <feGaussianBlur in="SourceGrapic" stdDeviation="2"></feGaussianBlur>
+            </filter>
+        </defs>
+        <rect x="20%" y="80%" width="100px" height="100px" fill="lightyellow">
+            <animateMotion path="M -20,-20 1000,-1500" begin="0s" dur="4s" repeatCount="indefinite" />
+        </rect>
+        <circle cx="20%" cy="80%" r="50px" fill="purple">
+            <animateMotion path="M -20,-20 -1000,-1000" begin="0s" dur="4s" repeatCount="indefinite" />
+        </circle>
+        <ellipse cx="20%" cy="80%" rx="50px" ry="40px" fill="yellow">
+            <animateMotion path="M -20,-20 -100,-1500" begin="0s" dur="2s" repeatCount="indefinite" />
+        </ellipse>
+        <circle cx="20%" cy="80%" r="60px" fill="red">
+            <animateMotion path="M -20,-20 1800,-100" begin="0s" dur="4s" repeatCount="indefinite" />
+        </circle>
+        <rect x="20%" y="80%" width="120px" height="80px" fill="green">
+            <animateMotion path="M -20,-20 1800,-800" begin="0s" dur="2s" repeatCount="indefinite" />
+        </rect>
+
+        <circle id="center" cx="20%" cy="80%" r="100" fill="url(#radialGradient)">
+            <animate attributeName="r" from="100" to="150" dur="2s" repeatCount="indefinite"></animate>
+        </circle>
+    </svg>
+    <script>
+        let screenHeight = document.documentElement.clientHeight;
+        let screenWidth = document.documentElement.clientWidth;
+        let bg = document.getElementById('bg');
+        bg.style.height = screenHeight;
+        bg.style.width = screenWidth;
+    </script>
+</body>
+
+</html>

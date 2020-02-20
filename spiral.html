@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>spiral</title>
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        #canvas {
+            position: relative;
+            padding: 0;
+            margin: 0 auto;
+            background: rgb(15, 15, 37);
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="canvas">
+
+    </canvas>
+    <script>
+        let clientWidth = window.screen.availWidth;
+        let clientHeight = window.screen.availHeight;
+        var myCanvas = document.getElementById('canvas');
+        myCanvas.height = clientHeight;
+        myCanvas.width = clientWidth;
+        ctx = myCanvas.getContext('2d');
+        var radius = 0;
+        var degStart = 0;
+        var color = 'red';
+        var degStart02 = 0;
+        var radius02 = 0;
+
+
+        function clear() {
+            console.log(radius);
+            if (radius < 0.2) {
+                let degEnd02 = degStart02 - 0.05;
+                ctx.beginPath();
+                ctx.arc(clientWidth * 0.75, clientHeight * 0.4, radius02, degStart02, degEnd02);
+                ctx.strokeStyle = 'rgb(15, 15, 37)';
+                ctx.lineWidth = '15';
+                ctx.stroke();
+                requestAnimationFrame(draw);
+            } else {
+                let degEnd = degStart - 0.05;
+                let degEnd02 = degStart02 - 0.05;
+
+                ctx.beginPath();
+                ctx.arc(clientWidth * 0.25, clientHeight * 0.4, radius, degStart, degEnd);
+                ctx.strokeStyle = 'rgb(15, 15, 37)';
+                ctx.lineWidth = '15';
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.arc(clientWidth * 0.75, clientHeight * 0.4, radius02, degStart02, degEnd02);
+                ctx.strokeStyle = 'rgb(15, 15, 37)';
+                ctx.lineWidth = '15';
+                ctx.stroke();
+
+                degStart02 += 0.05;
+                radius02 += 0.2;
+                
+                degStart -= 0.05;
+                radius -= 0.2;
+                requestAnimationFrame(clear);
+            }
+        }
+
+        function draw() {
+            if (radius > clientWidth * 0.20) {
+                radius02 = 0;
+                degStart02 = 0;
+                requestAnimationFrame(clear);
+            } else {
+                let degEnd = degStart + 0.05;
+
+                ctx.beginPath();
+                ctx.arc(clientWidth * 0.25, clientHeight * 0.4, radius, degStart, degEnd);
+                ctx.strokeStyle = getColor();
+                ctx.lineWidth = '15';
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.arc(clientWidth * 0.75, clientHeight * 0.4, radius, degStart, degEnd);
+                ctx.strokeStyle = getColor();
+                ctx.lineWidth = '15';
+                ctx.stroke();
+
+                degStart += 0.05;
+                radius += 0.2;
+
+
+                requestAnimationFrame(draw);
+            }
+        }
+
+        function getColor() {
+            return 'rgb(' + 255 * Math.random() + "," + 255 * Math.random() + "," + 255 * Math.random() + ")";
+        }
+
+        requestAnimationFrame(draw);
+    </script>
+</body>
+
+</html>

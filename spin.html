@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>spin</title>
+    <style>
+        html,
+        body {
+            height: 100vh;
+            width: 100vw;
+            margin: 0;
+            padding: 0;
+            background: radial-gradient(circle farthest-side at 50% 50%, rgb(237, 246, 247), rgb(11, 75, 214) 80%);
+            overflow: hidden;
+        }
+
+        #wrapper {
+            position: relative;
+            top: 50%;
+            margin: 0 auto;
+            margin-top: -300px;
+            height: 600px;
+            width: 600px;
+            transform-style: preserve-3d;
+            animation: rotate 16s linear infinite;
+        }
+
+        #wrapper>.inner {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            border-radius: 50%;
+            border: 5px solid rgb(241, 245, 34);
+
+        }
+
+        #wrapper>.inner:after {
+            content: '';
+            position: absolute;
+            height: 98%;
+            width: 98%;
+            border-radius: 50%;
+            border-left: 5px solid rgb(245, 167, 0);
+            animation: innerRotate 3s linear infinite;
+        }
+
+        .ring01 {
+            transform: rotateX(120deg);
+        }
+
+        .ring02 {
+            transform: rotateX(240deg);
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotateY(60deg) rotateX(0);
+            }
+
+            to {
+                transform: rotateY(60deg) rotateX(360deg);
+            }
+        }
+
+        @keyframes innerRotate {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        #center {
+            position: absolute;
+            height: 100px;
+            width: 100px;
+            border-radius: 50%;
+            background: radial-gradient(red, lightyellow 70%);
+            box-shadow: 0 0 20px white;
+            left: 50%;
+            top: 50%;
+            margin-top: -50px;
+            margin-left: -50px;
+            opacity: 0.5;
+        }
+
+        
+    </style>
+</head>
+
+<body>
+    <div id="wrapper">
+        
+        <div class="inner ring01"></div>
+        <div class="inner ring02"></div>
+        <div class="inner ring03"></div>
+    </div>
+    <div id="center"></div>
+</body>
+
+</html>

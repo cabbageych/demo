@@ -11,7 +11,7 @@ var httpServer = http.createServer((request, response) => {
 		if (err) {
 			response.writeHead(404, { "Content-Type": "text/html" });
 		} else {
-			var reg = /jpg|png|gif|jpeg/;
+			var reg = /jpg|png|gif|jpeg|bmp/;
 			if (reg.test(pathname)) {
 				response.writeHead(200, { "Content-Type": "image/jpeg" });
 				response.write(data);
